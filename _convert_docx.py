@@ -1039,75 +1039,11 @@ def main() -> None:
     )
     print("wrote index.html")
 
-    cover_html = f"""<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>封面 · {esc(BOOK_TITLE)}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <style>
-    * {{ box-sizing: border-box; }}
-    body {{
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 1.5rem;
-      background: #eceae6;
-      font-family: "Noto Sans SC", system-ui, sans-serif;
-      color: #0f1c2e;
-    }}
-    .stage {{ width: min(420px, 100%); }}
-    .cover {{
-      width: 100%;
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 18px 50px rgba(15,28,46,0.18);
-      line-height: 0;
-      background: #0b1f3a;
-    }}
-    .cover img {{ width: 100%; height: auto; display: block; }}
-    .actions {{
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }}
-    .actions a {{
-      color: #6b7a8d;
-      font-size: 0.9rem;
-      text-decoration: none;
-    }}
-    .actions a:hover {{ color: #0f1c2e; }}
-    .meta {{
-      text-align: center;
-      margin-top: 0.85rem;
-      color: #6b7a8d;
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }}
-  </style>
-</head>
-<body>
-  <div class="stage">
-    <div class="cover">
-      <img src="images/cover.jpg" alt="{esc(BOOK_TITLE)} 封面" />
-    </div>
-    <div class="meta">{esc(BOOK_TITLE)}<br />{esc(BOOK_AUTHOR)} 著</div>
-    <div class="actions">
-      <a href="index.html">进入目录</a>
-      <a href="ch01.html">开始第 1 章</a>
-    </div>
-  </div>
-</body>
-</html>
-"""
-    (OUT / "cover.html").write_text(cover_html, encoding="utf-8")
-    print("wrote cover.html")
+    # 封面页与二维码由人工维护，避免覆盖 images/cover.* / cover.html
+    if not (OUT / "cover.html").exists():
+        print("skip cover.html (missing; keep manual cover assets)")
+    else:
+        print("keep existing cover.html / cover images")
 
 
 if __name__ == "__main__":

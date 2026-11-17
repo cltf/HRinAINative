@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第一章 重新理解AI组织 · AI组织人力资源方法论</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+:root {
+  --ha-bg: #f5f7fa;
+  --ha-sidebar: #f5f7fa;
+  --ha-ink: #0f1c2e;
+  --ha-muted: #6b7a8d;
+  --ha-line: #dde3eb;
+  --ha-active-bg: #e8eef5;
+  --ha-accent: #1f6feb;
+  --ha-accent-ink: #ffffff;
+}
+body.hermes-book {
+  background: var(--ha-bg) !important;
+  color: var(--ha-ink);
+  font-size: 17px;
+  line-height: 1.75;
+}
+body.hermes-book a { color: #1554b5; }
+body.hermes-book a:hover { color: var(--ha-ink); }
+.ha-shell {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  min-height: 100vh;
+}
+.ha-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1.25rem 1rem 1.5rem;
+  border-right: 1px solid var(--ha-line);
+  background: var(--ha-sidebar);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.ha-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--ha-muted) !important;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.ha-back:hover { color: var(--ha-ink) !important; }
+.ha-toc-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ha-muted);
+  letter-spacing: 0.06em;
+  margin: 0.35rem 0 0.15rem;
+}
+.ha-chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.ha-chapters > li {
+  border-radius: 10px;
+}
+.ha-chapters .chap-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: var(--ha-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+.ha-chapters .chap-toggle:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-chapters > li.open > .chap-toggle,
+.ha-chapters > li.active > .chap-toggle {
+  background: var(--ha-active-bg);
+  color: var(--ha-ink);
+  font-weight: 600;
+  border-left-color: var(--ha-accent);
+}
+.ha-chapters .chap-caret {
+  flex: 0 0 auto;
+  width: 0.9rem;
+  margin-top: 0.15rem;
+  color: inherit;
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+}
+.ha-chapters > li.open > .chap-toggle .chap-caret {
+  transform: rotate(90deg);
+}
+.ha-chapters .chap-subs {
+  list-style: none;
+  margin: 0 0 0.35rem;
+  padding: 0 0.4rem 0.25rem 1.35rem;
+  display: none;
+}
+.ha-chapters > li.open > .chap-subs {
+  display: grid;
+  gap: 0.12rem;
+}
+.ha-chapters .chap-subs a {
+  display: block;
+  padding: 0.32rem 0.55rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ha-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.ha-chapters .chap-subs a:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-chapters .chap-subs a.active {
+  color: var(--ha-ink);
+  font-weight: 600;
+  background: rgba(31,111,235,0.08);
+}
+.ha-side-foot {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ha-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.ha-side-foot a {
+  color: var(--ha-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.ha-side-foot a:hover { color: var(--ha-ink); }
+.ha-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ha-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 2rem;
+  border-bottom: 1px solid var(--ha-line);
+  background: rgba(245,247,250,0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.ha-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-weight: 650;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
+}
+.ha-brand-mark {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 6px;
+  background: #0f1c2e;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.ha-top-links {
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+.ha-top-links a {
+  color: var(--ha-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.ha-top-links a:hover { color: var(--ha-ink); }
+.ha-article {
+  width: min(760px, calc(100% - 3rem));
+  margin: 0 auto;
+  padding: 1.75rem 0 4rem;
+}
+.ha-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: var(--ha-muted);
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+.ha-meta a { color: inherit; text-decoration: none; }
+.ha-meta a:hover { color: var(--ha-ink); }
+.ha-chapter-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.ha-chapter-num {
+  flex: 0 0 auto;
+  min-width: 2.4rem;
+  height: 2.4rem;
+  padding: 0 0.55rem;
+  border-radius: 8px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.ha-chapter-head h1 {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  border: none;
+  padding: 0;
+  letter-spacing: -0.03em;
+}
+.ha-section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.ha-section-list a {
+  display: block;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ha-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.ha-section-list a:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-content h2 {
+  border-top: none;
+  padding-top: 0.2rem;
+  margin-top: 2.2rem;
+}
+.ha-content h2::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 3px;
+  background: var(--ha-accent);
+  margin-bottom: 0.75rem;
+  border-radius: 2px;
+}
+.ha-content p { margin: 0 0 1rem; text-indent: 2em; }
+.ha-sec-box {
+  margin: 0 0 1.75rem;
+  padding: 1rem 1.15rem 1.05rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-sec-box .label {
+  margin: 0 0 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ha-muted);
+  letter-spacing: 0.04em;
+}
+.ha-sec-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.ha-sec-box a {
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-size: 0.95rem;
+}
+.ha-sec-box a:hover { color: #1554b5; }
+.book-block {
+  margin: 0 0 1rem;
+  padding: 1rem 1.1rem 1.05rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.book-block h2 {
+  margin: 0 0 0.55rem;
+  font-size: 1.05rem;
+  border: none;
+  padding: 0;
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+}
+.book-block h2 a { text-decoration: none; color: var(--ha-ink); }
+.book-block h2 .num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 7px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.book-block ul.secs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #3a4652;
+  font-size: 0.92rem;
+  display: grid;
+  gap: 0.28rem;
+}
+.book-block ul.secs a { text-decoration: none; color: #3a4652; }
+.book-block ul.secs a:hover { color: #1554b5; }
+.figcap { color: var(--ha-muted); font-size: 0.9rem; text-align: center; margin: 0.25rem 0 1rem; }
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.table-wrap th, .table-wrap td { border: 1px solid var(--ha-line); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+.table-wrap th { background: #e8eef5; }
+.figure img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--ha-line); }
+.ha-footer-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ha-line);
+}
+.ha-footer-nav a {
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-weight: 600;
+}
+.ha-index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.ha-index-list a {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ha-ink);
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-index-list a:hover { border-color: #c5d0de; background: #f8fafc; }
+.ha-index-list .num {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 8px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.ha-author {
+  margin: 0 0 1.5rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-author h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+  border: none;
+  padding: 0;
+}
+.ha-author p { margin: 0; color: #3a4652; font-size: 0.98rem; }
+.ha-cover-thumb {
+  display: inline-block;
+  line-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--ha-line);
+  margin: 0 0 1.25rem;
+}
+.ha-cover-thumb img {
+  width: min(240px, 100%);
+  height: auto;
+  display: block;
+}
+@media (max-width: 920px) {
+  .ha-shell { grid-template-columns: 1fr; }
+  .ha-sidebar {
+    position: static;
+    height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--ha-line);
+  }
+  .ha-article { width: min(760px, calc(100% - 2rem)); }
+  .ha-topbar { padding: 0.85rem 1rem; }
+}
+</style>
+</head>
+<body class="hermes-book">
+  <div class="ha-shell">
+    <aside class="ha-sidebar" aria-label="目录">
+      <a class="ha-back" href="index.html">← 返回目录</a>
+      <div class="ha-toc-label">目录</div>
+      <ul class="ha-chapters">
+        <li class="open active" data-chap="ch01.html"><button type="button" class="chap-toggle" aria-expanded="true"><span class="chap-caret" aria-hidden="true">▸</span><span>第一章 重新理解AI组织</span></button><ul class="chap-subs"><li><a href="ch01.html#1-1-从数字化组织到AI原生组织">1.1 从数字化组织到AI原生组织</a></li><li><a href="ch01.html#1-2-AI如何重塑价值创造方式">1.2 AI如何重塑价值创造方式</a></li><li><a href="ch01.html#1-3-人力资源在AI组织中的新定位">1.3 人力资源在AI组织中的新定位</a></li><li><a href="ch01.html#1-4-本书框架与使用方法">1.4 本书框架与使用方法</a></li></ul></li><li data-chap="ch02.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第二章 AI时代的人力资源战略</span></button><ul class="chap-subs"><li><a href="ch02.html#2-1-从职能支撑到组织能力中枢">2.1 从职能支撑到组织能力中枢</a></li><li><a href="ch02.html#2-2-人机协同下的人才战略设计">2.2 人机协同下的人才战略设计</a></li><li><a href="ch02.html#2-3-组织目标-业务战略与HR战略对齐">2.3 组织目标、业务战略与HR战略对齐</a></li><li><a href="ch02.html#2-4-战略落地的关键指标与治理机制">2.4 战略落地的关键指标与治理机制</a></li></ul></li><li data-chap="ch03.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第三章 组织设计：为AI重构工作方式</span></button><ul class="chap-subs"><li><a href="ch03.html#3-1-岗位-流程与决策权的重新定义">3.1 岗位、流程与决策权的重新定义</a></li><li><a href="ch03.html#3-2-人机分工原则与协作界面设计">3.2 人机分工原则与协作界面设计</a></li><li><a href="ch03.html#3-3-敏捷组织-平台型组织与AI团队形态">3.3 敏捷组织、平台型组织与AI团队形态</a></li><li><a href="ch03.html#3-4-组织设计的常见误区与纠偏方法">3.4 组织设计的常见误区与纠偏方法</a></li></ul></li><li data-chap="ch04.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第四章 人才供应链：选人与识人的升级</span></button><ul class="chap-subs"><li><a href="ch04.html#4-1-AI场景下的人才画像与能力模型">4.1 AI场景下的人才画像与能力模型</a></li><li><a href="ch04.html#4-2-招聘漏斗重构-从海选到精准匹配">4.2 招聘漏斗重构：从海选到精准匹配</a></li><li><a href="ch04.html#4-3-AI辅助面试-测评与偏见治理">4.3 AI辅助面试、测评与偏见治理</a></li><li><a href="ch04.html#4-4-关键-稀缺与复合型人才获取策略">4.4 关键、稀缺与复合型人才获取策略</a></li></ul></li><li data-chap="ch05.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第五章 能力建设：让人与AI一起变强</span></button><ul class="chap-subs"><li><a href="ch05.html#5-1-从岗位技能到可迁移能力体系">5.1 从岗位技能到可迁移能力体系</a></li><li><a href="ch05.html#5-2-AI素养-业务素养与协作素养">5.2 AI素养、业务素养与协作素养</a></li><li><a href="ch05.html#5-3-学习路径设计与人机共学机制">5.3 学习路径设计与人机共学机制</a></li><li><a href="ch05.html#5-4-内部讲师-实践社区与知识沉淀">5.4 内部讲师、实践社区与知识沉淀</a></li></ul></li><li data-chap="ch06.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第六章 绩效与激励：驱动人机协同产出</span></button><ul class="chap-subs"><li><a href="ch06.html#6-1-结果-过程与协作质量的三维评价">6.1 结果、过程与协作质量的三维评价</a></li><li><a href="ch06.html#6-2-AI贡献度如何纳入绩效体系">6.2 AI贡献度如何纳入绩效体系</a></li><li><a href="ch06.html#6-3-激励设计-短期回报与长期价值平衡">6.3 激励设计：短期回报与长期价值平衡</a></li><li><a href="ch06.html#6-4-高管-专家与一线员工的差异化方案">6.4 高管、专家与一线员工的差异化方案</a></li></ul></li><li data-chap="ch07.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第七章 人才发展与继任：构建组织韧性</span></button><ul class="chap-subs"><li><a href="ch07.html#7-1-关键岗位盘点与继任风险识别">7.1 关键岗位盘点与继任风险识别</a></li><li><a href="ch07.html#7-2-AI时代的领导力画像变化">7.2 AI时代的领导力画像变化</a></li><li><a href="ch07.html#7-3-高潜识别-轮岗与加速成长">7.3 高潜识别、轮岗与加速成长</a></li><li><a href="ch07.html#7-4-从个人发展计划到组织能力地图">7.4 从个人发展计划到组织能力地图</a></li></ul></li><li data-chap="ch08.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第八章 文化与变革：让组织真正用起来</span></button><ul class="chap-subs"><li><a href="ch08.html#8-1-AI落地失败的组织文化根因">8.1 AI落地失败的组织文化根因</a></li><li><a href="ch08.html#8-2-信任-透明与负责任使用原则">8.2 信任、透明与负责任使用原则</a></li><li><a href="ch08.html#8-3-变革沟通-试点扩散与阻力管理">8.3 变革沟通、试点扩散与阻力管理</a></li><li><a href="ch08.html#8-4-HR如何成为变革催化者">8.4 HR如何成为变革催化者</a></li></ul></li><li data-chap="ch09.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第九章 数据驱动的人力资源运营</span></button><ul class="chap-subs"><li><a href="ch09.html#9-1-HR数据底座与关键指标体系">9.1 HR数据底座与关键指标体系</a></li><li><a href="ch09.html#9-2-从报表到洞察-诊断组织健康度">9.2 从报表到洞察：诊断组织健康度</a></li><li><a href="ch09.html#9-3-AI在HR运营中的应用边界">9.3 AI在HR运营中的应用边界</a></li><li><a href="ch09.html#9-4-隐私-合规与伦理红线">9.4 隐私、合规与伦理红线</a></li></ul></li><li data-chap="ch10.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第十章 落地路径：从试点到规模化</span></button><ul class="chap-subs"><li><a href="ch10.html#10-1-成熟度评估与优先级排序">10.1 成熟度评估与优先级排序</a></li><li><a href="ch10.html#10-2-90天启动计划与一年演进路线">10.2 90天启动计划与一年演进路线</a></li><li><a href="ch10.html#10-3-跨部门协同机制与投入产出评估">10.3 跨部门协同机制与投入产出评估</a></li><li><a href="ch10.html#10-4-典型场景案例与可复用打法清单">10.4 典型场景案例与可复用打法清单</a></li></ul></li><li data-chap="appendix.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>附录</span></button><ul class="chap-subs"><li><a href="appendix.html#A-1-工具箱-附录A">A.1 工具箱（附录A）</a></li><li><a href="appendix.html#A-2-能力模型与指标模板-附录B">A.2 能力模型与指标模板（附录B）</a></li><li><a href="appendix.html#A-3-自检清单与复盘表-附录C">A.3 自检清单与复盘表（附录C）</a></li></ul></li>
+      </ul>
+      <div class="ha-side-foot">
+        <a href="cover.html">封面</a>
+        <a href="index.html">目录</a>
+      </div>
+    </aside>
+    <div class="ha-main">
+      <header class="ha-topbar">
+        <a class="ha-brand" href="index.html">
+          <span class="ha-brand-mark">HR</span>
+          AI组织人力资源方法论
+        </a>
+        <div class="ha-top-links">
+          <a href="cover.html">封面</a>
+          <a href="index.html">目录</a>
+        </div>
+      </header>
+      <article class="ha-article">
+        <div class="ha-meta">
+          <div><a href="index.html">目录</a> / 第01章</div>
+          <div>陈晓娇 著</div>
+        </div>
+        <div class="ha-chapter-head">
+          <div class="ha-chapter-num">01</div>
+          <h1>第一章 重新理解AI组织</h1>
+        </div>
+        <nav class="ha-sec-box" aria-label="本章小节">
+          <div class="label">本章小节</div>
+          <ul>
+<li><a href="#1-1-从数字化组织到AI原生组织">1.1 从数字化组织到AI原生组织</a></li><li><a href="#1-2-AI如何重塑价值创造方式">1.2 AI如何重塑价值创造方式</a></li><li><a href="#1-3-人力资源在AI组织中的新定位">1.3 人力资源在AI组织中的新定位</a></li><li><a href="#1-4-本书框架与使用方法">1.4 本书框架与使用方法</a></li>
+          </ul>
+        </nav>
+        <div class="ha-content">
+<p>一家年营收三十亿元的制造企业，两年前给人力资源部配了智能招聘系统，给一线主管配了AI助手，给培训部门买了课程生成工具。一年后复盘，招聘周期缩短了四天，培训课件产出翻了三倍，主管们每天节省四十分钟写周报。CEO看完汇报只说了一句：公司还是原来那家公司，只是 paperwork 快了一点。这句话刺中了问题的要害。工具层面的效率提升并不自动带来组织层面的变化，而真正的竞争差距，恰恰产生在组织层面。</p>
+<p>要理解AI组织，先要放弃一个流行的误解：把AI当成更聪明的软件。软件服务于既有流程，AI则可以承接流程中的判断与执行；软件要求人定义每一步，AI可以在给定目标下自行规划路径。当执行主体从人变成"人加智能体"，组织的分工方式、责任边界、评价口径和治理手段都会被迫重写。这一章先讲清楚变化发生在哪里，再讲价值创造如何被改写，最后说明人力资源的新位置与本书的使用方法。</p>
+<h2 id="1-1-从数字化组织到AI原生组织">1.1 从数字化组织到AI原生组织</h2>
+<p>过去二十年的数字化，本质上是把线下的流程搬到线上。审批流、报销、考勤、招聘、培训被装进系统，数据被集中，报表变得实时。人被解放了一部分体力与重复劳动，但组织的骨架没有变：仍然是部门分工、岗位定责、层级审批，系统扮演记录者和通道的角色。数字化组织里，系统是人的工具，流程是人走的路径，决策由人作出并由人承担。</p>
+<p>AI原生组织的分界不在这里。它的标志是常规执行主要由AI承担，人从"做事"转向"定目标、做判断、处理例外、协调关系、承担责任"。腾讯在一份关于AI原生组织的公开研究里，把这个变化拆成业务、组织、流程、系统、治理五个层面，并给出十个目标状态：业务上把AI当作价值倍增器；组织上以任务为中心、把数字生产力当真实产能、追求人机互补；流程上让AI自主执行、人处在环上监督、任务并行迭代；系统上沉淀组织记忆、共享上下文、让系统具备自进化能力；治理上把规则嵌入运行过程。这套框架的价值不在于逐条对照打分，而在于提醒管理者：AI原生化是一次系统性改造，任何单点工具采购都无法完成它。</p>
+<p>从演进路径看，多数企业会经历三个阶段。第一阶段是工具增强，员工用AI写文档、做摘要、生成图片，效率提升可见，但工作流不变，价值主要落在个人身上。第二阶段是流程嵌入，AI被接进具体业务流程，例如简历初筛、客服分流、代码评审、质检判图，流程开始围绕AI的能力重新排列，岗位任务出现实质性删减。第三阶段才是组织重构，责任单元从岗位变为"任务加人机编队"，管理层级因信息中介消失而收缩，能力以智能体和知识资产的形式被复用。三个阶段的投入结构完全不同：第一阶段花在订阅费上，第二阶段花在系统集成和数据治理上，第三阶段花在组织设计与角色重配上。很多企业卡在第二阶段，因为第三阶段要动的是权力和利益。</p>
+<p>三个阶段对应的成本结构也不一样，这一点常被财务和HR忽略。工具增强阶段的支出是分散的订阅费，藏在各部门的费用科目里，几乎不占资本预算；流程嵌入阶段的支出变成系统集成、数据治理和模型运营，需要持续的人力投入，且回收周期以年计；组织重构阶段的支出最隐蔽，它是重配岗位、重建流程、重训管理者所消耗的组织注意力，账面上看不到，但会真实地拖慢业务。管理者若只用第一阶段的成本预期去承诺第三阶段的收益，项目一定会在中途失去耐心。</p>
+<p>围绕"AI原生"还有三种常见误判，值得提前挑明。第一种是把上云、上系统当成原生化，结果是流程更规范了，执行主体仍是人，AI只是多加了一层界面。第二种是把工具数量当成能力，采购了十个平台，每个平台都有人在用，但数据不通、规则不一、责任不清，组织实际获得的是十套碎片，而不是一种能力。第三种是把自动化当成治理，以为把审批交给模型就解决了风险，恰恰相反，权限越自动，越需要清晰的授权分级、留痕与回溯机制。判断是否原生化，不看买了什么，而看组织的任务分配、决策路径与经验沉淀是否真的改变。</p>
+<p>还有一个更朴素的观察：AI原生组织对"管理"的定义变了。传统管理的大量工作是信息中介，收集进度、汇总情况、协调资源、向上汇报。智能体最擅长的恰恰是这类工作，因此管理岗位的数量会收缩，管理者的工作会向两端移动，一端是目标与优先级，另一端是例外与责任。这不是管理被削弱，而是管理被提纯。管理者若仍把价值建立在"掌握信息"上，会发现自己迅速被系统架空；若能把价值转向"定义什么值得做、什么绝不能做"，位置反而更稳。</p>
+<p>组织形态也会随之出现一种看似矛盾的变化：层级收缩，但管理幅度未必无限扩大。信息中介型岗位被智能体替代后，一个管理者可以带更多人，因为日常协调由系统承接；可一旦遇到跨团队的复杂判断，管理幅度过大又会失效。实际可行的做法是把团队切成两类单元：一类是稳定的专业单元，负责积累能力与维护标准；一类是临时任务单元，围绕具体目标快速编队，任务结束即解散。前者提供深度，后者提供速度，管理者在两者之间调度资源。这样的组织看起来比传统矩阵更"乱"，但决策链条更短，能力复用率更高。</p>
+<p>组织边界也在变化。过去边界由雇佣关系、办公地点和系统权限共同定义，现在智能体可以跨系统取数、跨团队执行，边界变得更像"授权范围"而不是"部门墙"。这带来一个新的管理问题：当智能体代表A部门去调用B部门的数据时，谁授权、谁审计、谁承担后果。很多组织的AI项目失败，不是模型不准，而是边界没定义清楚，最后变成部门之间互相提防。人力资源在这种议题上不能缺席，因为它涉及岗位权限、责任归属与协作规则，而这三件事恰好是HR的传统地盘，只是过去以"职责说明书"的形式存在，现在要改写为"授权矩阵"。</p>
+<p>判断一个组织是否真正进入AI原生状态，有四个朴素测试。第一个测试是缺了AI还能不能正常运转。如果停掉模型服务，业务只是变慢但秩序如常，说明AI仍是附加工具；如果停掉之后关键流程直接瘫痪，说明AI已成为生产力。第二个测试是谁对产出负责。智能体执行了工作，但出了错由谁签字、由谁复盘、由谁向客户解释，必须有明确的人。第三个测试是决策是否分层授权。哪些决定可以自动作出，哪些必须人工复核，哪些绝对禁止自动化，如果组织回答不了，说明治理还停留在口号。第四个测试是经验能否被复用。老师傅的判断、优秀员工的打法、管理者的决策逻辑，如果只留在人脑里，组织记忆就没有形成，AI也无法持续变强。</p>
+<p>一个咨询项目里的合成案例可以说明这种差别。某汽车零部件企业过去依靠质检员抽检，漏检率与人员经验强相关，夜班质量波动明显。他们引入视觉模型做全检，最初的做派是把模型当"第二双眼睛"，质检员看模型标记的图片，工作量反而增加三成，项目差点被叫停。真正的转折发生在组织设计上：企业把质检科重组为质量能力中心，一部分人转为异常处置工程师，负责判定模型无法覆盖的复杂缺陷；一部分人转为数据与模型运营，负责标注、回训和版本管理；原来班组长承担的质量决策权，被拆成"模型自动放行、异常人工判定、重大风险升级"三层。半年后，质检人数下降，但异常处置和模型运营岗位增加，质量成本下降，客户投诉减少。这个案例里没有哪一项技术是独家的，差别在于企业愿意重写岗位与决策权。</p>
+<h2 id="1-2-AI如何重塑价值创造方式">1.2 AI如何重塑价值创造方式</h2>
+<p>AI对价值创造的改变，不是"更快地做同样的事"，而是改变了价值从哪里来、由谁交付、按什么计价。理解这一点，才能理解为什么有些企业投入巨大却收效甚微，也才能理解人力资源为什么必须参与战略讨论。</p>
+<p>第一类价值来自规模化的判断力。过去，专家判断是最难复制的资源，一名资深医生、律师、工程师的经验只能一对一出售，培养周期长，供给刚性。AI可以把专家判断的部分模式固化为可调用的服务，让判断力以近似零边际成本的方式扩散。多邻国的公开案例是个典型：这家语言学习平台过去开发一门课程动辄数年，在把生成式AI接进内容生产与验证流程、由教研专家把关质量之后，短期内上线了大批新课程，课程供给速度发生了量级变化。值得注意的是，真正起作用的不是"AI会写内容"，而是"专家判断被拆成可复用模板加人工把关"的组合。</p>
+<p>这里有个容易被忽略的前提：判断力要能规模化，先要有标准。没有标准的判断无法被拆解，也无法被验证，AI只会把随意放大成批量错误。多邻国的做法之所以成立，是因为课程质量有一套教研标准，专家知道什么算合格，模型才有明确的优化方向。反过来说，很多企业把AI接进一个本身标准模糊的流程，结果只是让混乱跑得更快。人力资源在这样的项目里能提供的关键价值，正是帮助业务把"什么叫好"说清楚，把隐性标准显性化。这件事听起来像基础工作，实际上决定了AI项目的上限。</p>
+<p>标准之外还需要验证机制。判断被规模化之后，错误也会被规模化，因此每一个自动化的判断环节都要有抽样复核、异常拦截和回溯路径。验证机制不是不信任AI，而是让AI的产出可以被组织放心使用。设计验证机制时，要回答三个问题：谁来抽样，抽样发现问题的阈值是多少，发现问题后如何回训或改规则。三个问题答不清，所谓的"智能化"就只是一次性的演示。</p>
+<p>第二类价值来自边际成本与交付周期的压缩。信息收集、初稿撰写、数据核对、代码修改这类工作，过去需要按小时计费的人力，现在可以由智能体连续执行。Stripe公开介绍过一种无人值守的编码智能体：工程师在聊天工具里提出明确任务，智能体读取资料、修改代码、运行测试并提交变更，多个任务并行推进，人只在合并前做审核。摩根士丹利则用对账智能体处理账簿差异，把历史指引和人工处理经验沉淀为可调用规则，财务人员从逐项排查转为审核建议。这些案例的共同点在于：流程没有简单加速，而是把"执行"与"审核"分离，人力的单位从"小时"变成"判断次数"。</p>
+<p>第三类价值来自经验资产化。传统组织的经验沉淀靠师徒、靠文档、靠离职交接，损耗极大。AI原生组织把工作过程本身变成数据资产：一次异常处置、一次客户谈判、一次方案取舍，都可以被记录、结构化、再调用。资产化的意义不只是"不丢经验"，更在于经验可以被组合、被迁移、被用于训练新人和新模型。组织由此获得一种过去很少具备的能力：每做一次业务，能力就厚一层。</p>
+<p>价值创造方式的变化，还会传导到计价与预算逻辑。工业时代按人头、按工时、按设备折旧核算成本，服务时代按项目、按人天报价；AI组织里，客户购买的越来越接近"结果"而不是"投入"，内部预算也开始从"编制"转向"任务包"。这对人力资源有直接影响：编制不再是资源分配的唯一单位，岗位数量无法反映真实产能，人力预算若仍按人数编制，就会系统性地低估智能体带来的产出，也会系统性地掩盖人被低效占用的事实。更合理的做法是把预算拆成三块：人的判断力、智能体的运行成本、知识与数据的维护成本，分别核算、分别优化。</p>
+<p>与此相关的另一个变化，是组织注意力的稀缺性上升。当生成变得廉价，筛选、审核、拍板变得昂贵。一个组织每天能承受的决策数量是有限的，智能体可以把候选方案从三个变成三十个，但管理层的判断带宽不会因此扩大。成熟的做法是给"审查"设配额：明确哪些决策必须由人做、每次决策最多看几个方案、什么情况下直接退回重做。没有这项设计，AI带来的不是效率，而是决策拥堵。这也解释了为什么有些企业AI用得很热闹，会议却越来越长。</p>
+<p>价值创造方式还改变了对"经验"的态度。过去经验是个人资产，资深员工靠经验获得议价能力，组织则担心经验随人流失。AI原生组织把经验变成组织资产，个人的议价基础随之从"我知道"转向"我能判断别人不知道的例外"。这对人才管理是个好消息：年轻人可以更快达到可用水平，因为基础知识与常规判断被智能体承接；同时也是个挑战：如果培养体系仍以"记住知识、熟练操作"为核心，培养出来的人在AI组织里会迅速贬值。第五章会具体讲能力体系如何改造。</p>
+<p>第四类价值来自价值链压缩。当信息汇总、方案初稿、跨部门协调的中间环节被智能体承接，原本串联的价值链可以变成并联的任务网络。组织的产出节奏不再取决于最长的那道审批链，而取决于关键判断的到位速度。</p>
+<p>客户关系与信任仍然是人的地盘。AI可以把方案做得更完整、响应更快，但客户在关键决策上仍然需要一个能承担责任的对象。一个能签字、能被追责、能在出问题时站出来的人，是交易成立的心理前提。这并不意味着人必须亲自完成所有沟通，而是意味着关系的关键节点必须由人把守：首次承诺、重大让步、危机处理、长期合作的续约判断。组织若把这几件事也交给智能体，短期看似高效，长期会失去信任资本。反过来，若把日常信息同步、方案初稿、会议纪要交给智能体，人就能把时间集中在这几个关键节点上，关系质量反而提升。</p>
+<p>这也给"人效"讨论提供了一个新角度。传统人效指标是人均营收、人均利润，衡量的是人的产出密度；AI组织更需要看"判断密度"，即一个人一年参与了多少个高价值判断，以及这些判断的质量如何。一个客服人员每天处理两百个咨询，看似人效很高，但如果其中一百八十个可以被智能体分流，真正需要人的只有二十个复杂个案，那么他的价值就取决于这二十个个案的处理质量与沉淀出的规则，而不是处理总量。指标体系若不改，组织会奖励"忙碌"，而不是奖励"判断"。这也解释了一个现象：同样引入AI，小团队有时比大企业跑得快，因为小团队的中间环节本来就少，AI直接把执行补上了；大企业若只给原有层级配工具，反而把冗余环节固化得更牢。</p>
+<p>价值创造方式改变之后，衡量产出的人会遇到一个新麻烦：产出看起来变多了，但质量未必同步提升。智能体可以在几分钟内生成十版方案，审核者却只有一个人；内容供给增加了，客户的决策负担也增加了。复杂性没有消失，只是从生产端转移到了审核端和选择端。管理者如果只考核"生成数量"，组织会迅速陷入产出的通胀。有效的做法是把评价重心放在"被采纳的判断"和"避免的损失"上，这一点会在第六章展开。</p>
+<p>对岗位的影响同样需要更细的颗粒度。AI替代的从来不是整个岗位，而是岗位中的任务簇。一个岗位通常混合三类任务：规则明确、可验证、容错率高的任务，适合自动执行；需要专业判断但结果可复核的任务，适合人机协同；涉及责任承担、关系建立、价值取舍、例外定义的任务，仍然由人主导。岗位不会整体消失，但会沿着任务比例重新配比，最终变成一种新的角色：人负责定义什么算对，机器负责把对的事情做多。</p>
+<h2 id="1-3-人力资源在AI组织中的新定位">1.3 人力资源在AI组织中的新定位</h2>
+<p>大多数HR部门在过去二十年里把自己训练成了流程专家：把招聘流程做顺，把绩效表格发齐，把培训项目排满，把劳动关系风险控住。这些工作有价值，但在AI组织里，它们的边际重要性在下降，因为流程本身正在被自动化和产品化。HR若继续把自己定义为"流程的执行者"，就会与智能体争夺同一块地盘，而且大概率争不过。</p>
+<p>新的定位可以拆成三个角色。第一个角色是组织能力架构师。CEO关心的不是"HR上了几个AI工具"，而是"组织有没有能力打下一场仗"。能力架构师要做的事情，是把战略翻译成能力清单，再判断哪些能力可以外购、哪些必须内建、哪些可以由智能体承载、哪些必须由人承担。这个角色要求HR懂业务的价值链，而不只是懂人力六模块。</p>
+<p>第二个角色是人机协同设计师。智能体接进流程之后，最容易出的问题不是技术故障，而是界面缺失：谁给它输入，谁审核输出，异常怎么升级，责任怎么落。协同设计师要设计的正是这些"接口"，包括任务分派规则、审核节点、例外路径、交接标准。这类工作过去散落在流程再造和质量管理里，现在需要HR与业务、IT共同承担。</p>
+<p>第三个角色是使用治理者。AI进入人力资源场景，天然带有高风险属性：招聘筛选可能带来歧视，绩效数据可能被滥用，员工对话可能被监控，模型训练可能侵犯个人信息权益。治理者要划定可用、慎用、禁用的边界，建立告知、授权、审计和申诉机制。这个角色不是法务的替代，而是把合规要求翻译成可执行的管理动作。</p>
+<p>三支柱的分工也在被重写。共享服务中心的事务性工作，如员工咨询、证明开具、考勤异常处理，正在被智能体承接，人的角色转为"例外处理与体验设计"，也就是处理智能体解决不了的复杂个案，并持续优化知识库。HRBP的价值从"传递政策、协调资源"转向"诊断组织、设计能力"，因为他们掌握的业务上下文是智能体短期内拿不到的。COE则从"出制度"转向"规则工程"：把制度写成智能体可执行的规则，把专业判断拆成可复用的模板，把治理要求嵌入产品。这个判断在多家机构和企业的公开讨论中反复出现，方向大体一致，差别只在推进速度。</p>
+<p>HR自身的能力结构也要随之调整。过去HR的核心能力是制度设计、流程管理、沟通协调与劳动关系处理，这些仍然重要，但权重会下降；上升的是四类能力：读懂业务价值链的商业理解力，能看懂数据口径与模型输出的数据素养，能把工作拆成人机分工的流程设计力，以及能推动中层改变行为的变革领导力。四类能力中，最难补的是流程设计力，因为它要求HR从"管人"转向"管事"，从岗位说明书转向任务流与责任流。多数HR的训练路径里没有这一块，需要借助外部方法和跨部门项目补课。</p>
+<p>一个合成案例可以说明这种转变的难度。某零售企业的HRBP团队原本每月做一次人员编制回顾，输出一张各门店人数与流失率的表。引入智能体之后，他们把回顾改成组织诊断：把门店的排班数据、客流数据、智能客服的分流数据、员工技能标签放在一起，让模型生成异常门店清单，再由HRBP到店核实原因。第一次运行就发现，某区域流失率高并不是薪酬问题，而是智能排班把老员工排到了不熟悉的时段，导致工作挫败。HRBP随后与运营共同调整排班规则，把"熟练时段"作为约束条件写进系统。这件事的价值不在于用了模型，而在于HRBP从"报数字的人"变成了"解释组织为什么失灵的人"。这类能力，正是智能体短期内替代不了的部分。</p>
+<p>需要说清楚的是，HR的新定位并不意味着每个HR都要会写提示词、会训模型。组织需要的是分工：少数人深入技术与数据，多数人深入业务与组织，两者通过共同的语言协作。把所有HR都送去学编程，是对新定位的误读，也是对资源的浪费。真正需要普及的是判断力，知道什么场景适合自动化、什么场景必须留人、什么条件下应该停下来重新设计。</p>
+<p>对HR负责人而言，还有一个战略选择需要提前做：把AI能力放在哪个位置。放在共享服务中心，收益是效率，天花板较低；放在COE，收益是专业能力产品化，但容易脱离业务；放在BP团队，收益是贴近场景，但容易碎片化。比较稳妥的做法是双层结构：在COE建立一个小型"人机协同设计"团队，负责方法、规则与工具；在BP团队培养一批"场景设计师"，负责落地与反馈。两层之间用项目制连接，而不是用汇报关系连接。</p>
+<p>还有一个容易被忽略的前提：HR自己要先用AI。一个从未亲手用过智能体处理工作的HR团队，很难为业务设计人机协同，也很难判断哪些承诺是真实的、哪些是供应商话术。HR的AI采用率本身就是可信度来源。但"自己先用"不等于"自己乱用"，HR在处理员工数据时必须比任何部门都更克制，否则会在治理上失去立场。</p>
+<p>需要警惕一种退化：HR变成AI采购部门。它的典型症状是，年度计划里排满了系统选型和供应商比价，却说不清这些投入对应哪项组织能力；汇报里满是"上线了多少功能"，却答不出"关键岗位到岗是否更快、管理者协调时间是否下降、人才配置是否改善了经营结果"。麦肯锡在讨论智能体驱动型组织时点出过这个尴尬：HR能统计节省的时间，却难以回答结果性问题。定位升级的检验标准，最终是能否用业务语言说明组织能力的增量。</p>
+<p>这就要求HR的指标语言发生迁移。招了多少人、办了多少场培训、绩效表格回收率多少，这些活动指标仍然需要，但不能作为价值证明。更有说服力的指标是：关键岗位的空缺周期与到岗质量，管理者用于协调与审批的时间变化，跨部门任务的交付周期，核心能力的内部供给率，员工在AI工具上的有效使用深度。这些指标有一个共同特点，它们都跨越了HR与业务的边界，需要联合定义口径。HR若不能主导这些指标的定义，就只能被动接受业务给的口径，最终沦为数据的搬运者。</p>
+<p>还有一个现实约束需要承认：HR推动AI组织变革的权力基础是有限的。HR很少直接拥有业务资源，也较少掌握技术团队。真正有效的推动方式不是发文件，而是借三个杠杆：借CEO的议程设置权，把组织能力问题放进经营会议；借业务负责人的痛点，把AI方案嵌进他们已经在意的指标；借财务的投入产出审查，把无效项目及时止损。三根杠杆用得好，HR不需要很大的编制，也能改变组织的运行方式。这一点会在第八章展开为具体的变革打法。</p>
+<h2 id="1-4-本书框架与使用方法">1.4 本书框架与使用方法</h2>
+<p>本书把AI组织的人力资源工作拆成五层，层层相扣。战略层回答"组织要靠什么能力赢"，对应第二章；结构层回答"工作怎么分、决策权怎么放"，对应第三章；人才层回答"人从哪里来、如何识别与获取"，对应第四章；能力层回答"人和AI如何一起变强"，对应第五章；机制层回答"如何评价、如何激励、如何发展、如何治理"，对应第六至第九章；落地层回答"从哪里开始、如何规模化"，对应第十章。附录提供可直接使用的表单与模板。</p>
+<p>贯穿全书的有五条主线，读者可以用它们检查任何一项HR举措是否站得住。能力密度，指的是单位人力的判断质量与产出上限是否提升，而不只是人数变化。协同界面，指的是人与智能体之间的输入、审核、升级、交接是否有明确设计。责任归属，指的是任何自动化产出的最终责任是否落在具体的人。数据资产，指的是工作过程是否在沉淀可复用的组织记忆。变革节奏，指的是推进速度是否与组织的吸收能力匹配。五条线中任何一条断裂，AI项目都会退化为一次性表演。</p>
+<p>不同读者可以走不同路径。CEO与业务负责人优先读第一、二、三、十章，重点看组织设计与落地路径，跳过操作细节；CHO与HR负责人建议通读，把第二、六、九章作为重点，因为战略对齐、评价激励与治理是HR真正能形成壁垒的地方；HRBP与OD从业者优先读第三、四、五、七、八章，这些章节直接对应日常的岗位设计、人才盘点与变革推动；数字化与IT负责人关注第三、九、十章，用于和HR建立共同语言。无论哪条路径，都建议带着一个真实业务场景阅读，边读边填附录里的自检表。</p>
+<p>使用本书有一个现实提醒：不要试图一次性全量改造。AI组织的建设更像装修而非搬家，需要一间房一间房地改，改完还要住进去验证。选一个高频、可验证、风险可控的场景作为起点，用九十天跑通"任务重排、界面设计、评价口径、治理规则"的完整闭环，再复制到相邻场景。第十章给出的路线图，正是按这个逻辑设计的。</p>
+<p>本书在写作上做了三点约定。</p>
+<p>为了避免概念在各章之间漂移，先给出几个核心术语的用法。AI组织，指常规执行由智能体承担、人聚焦目标与判断、并以数据与规则支撑运行的组织形态，它是一个程度概念，不是非黑即白的标签。智能体，指能够在给定目标下规划步骤、调用工具、执行多步任务并交付结果的系统，区别于只响应单次指令的生成式工具。人机协同，指人与智能体在同一任务流中分工、交接与互审的工作方式，重点在"界面"而不是"工具"。能力密度，指单位人力所承载的判断质量与产出上限。组织记忆，指被结构化、可检索、可复用的工作经验与决策依据。协同界面，指任务分派、输入规范、审核节点、异常升级与责任归属的一组设计。这些词在后续章节反复出现，含义以本节为准。</p>
+<p>涉及具体企业的做法，只引用公开可查的报道，并尽量用机制而非数字说话；涉及咨询实践中的观察，一律以匿名合成案例呈现，不指向任何真实企业；涉及法律条款，按条文原意引用，但不构成法律意见，具体场景仍需专业判断。这样处理会牺牲一些故事性，但能保证读者拿去做内部讨论时，不必先花时间核实真假。</p>
+<p>回到开头那家制造企业。它后来做的第一件事不是再买一套系统，而是把"哪些工作由机器做、哪些必须由人做、出了事谁负责"写成了一页纸，贴在每个车间的看板上。这一页纸比任何工具都更接近AI组织的起点。理解AI组织，最终要落到这种具体而微的设计上：不是赞叹技术，而是重新安排人与机器的位置，并为这个新位置配上责任、能力与评价。接下来的九章，就是把这页纸逐层展开。</p>
+        </div>
+        <div class="ha-footer-nav">
+          <a href="index.html">← 上一页</a>
+          <a href="ch02.html">下一页 →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+  
+<script>
+(function () {
+  var list = document.querySelector(".ha-chapters");
+  if (!list) return;
+  list.addEventListener("click", function (e) {
+    var btn = e.target.closest(".chap-toggle");
+    if (!btn || !list.contains(btn)) return;
+    var li = btn.closest("li[data-chap]");
+    if (!li) return;
+    var willOpen = !li.classList.contains("open");
+    list.querySelectorAll("li[data-chap]").forEach(function (item) {
+      item.classList.remove("open");
+      var b = item.querySelector(".chap-toggle");
+      if (b) b.setAttribute("aria-expanded", "false");
+    });
+    if (willOpen) {
+      li.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      // 第一次展开时进入该章正文；已在本章则只展开小节
+      var href = li.getAttribute("data-chap");
+      var file = (location.pathname.split("/").pop() || "");
+      if (href && file !== href && !file.endsWith("/" + href)) {
+        location.href = href;
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

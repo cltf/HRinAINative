@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第十章 落地路径：从试点到规模化 · AI组织人力资源方法论</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+:root {
+  --ha-bg: #f5f7fa;
+  --ha-sidebar: #f5f7fa;
+  --ha-ink: #0f1c2e;
+  --ha-muted: #6b7a8d;
+  --ha-line: #dde3eb;
+  --ha-active-bg: #e8eef5;
+  --ha-accent: #1f6feb;
+  --ha-accent-ink: #ffffff;
+}
+body.hermes-book {
+  background: var(--ha-bg) !important;
+  color: var(--ha-ink);
+  font-size: 17px;
+  line-height: 1.75;
+}
+body.hermes-book a { color: #1554b5; }
+body.hermes-book a:hover { color: var(--ha-ink); }
+.ha-shell {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  min-height: 100vh;
+}
+.ha-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1.25rem 1rem 1.5rem;
+  border-right: 1px solid var(--ha-line);
+  background: var(--ha-sidebar);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.ha-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--ha-muted) !important;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.ha-back:hover { color: var(--ha-ink) !important; }
+.ha-toc-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ha-muted);
+  letter-spacing: 0.06em;
+  margin: 0.35rem 0 0.15rem;
+}
+.ha-chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.ha-chapters > li {
+  border-radius: 10px;
+}
+.ha-chapters .chap-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: var(--ha-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+.ha-chapters .chap-toggle:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-chapters > li.open > .chap-toggle,
+.ha-chapters > li.active > .chap-toggle {
+  background: var(--ha-active-bg);
+  color: var(--ha-ink);
+  font-weight: 600;
+  border-left-color: var(--ha-accent);
+}
+.ha-chapters .chap-caret {
+  flex: 0 0 auto;
+  width: 0.9rem;
+  margin-top: 0.15rem;
+  color: inherit;
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+}
+.ha-chapters > li.open > .chap-toggle .chap-caret {
+  transform: rotate(90deg);
+}
+.ha-chapters .chap-subs {
+  list-style: none;
+  margin: 0 0 0.35rem;
+  padding: 0 0.4rem 0.25rem 1.35rem;
+  display: none;
+}
+.ha-chapters > li.open > .chap-subs {
+  display: grid;
+  gap: 0.12rem;
+}
+.ha-chapters .chap-subs a {
+  display: block;
+  padding: 0.32rem 0.55rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ha-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.ha-chapters .chap-subs a:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-chapters .chap-subs a.active {
+  color: var(--ha-ink);
+  font-weight: 600;
+  background: rgba(31,111,235,0.08);
+}
+.ha-side-foot {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ha-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.ha-side-foot a {
+  color: var(--ha-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.ha-side-foot a:hover { color: var(--ha-ink); }
+.ha-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ha-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 2rem;
+  border-bottom: 1px solid var(--ha-line);
+  background: rgba(245,247,250,0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.ha-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-weight: 650;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
+}
+.ha-brand-mark {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 6px;
+  background: #0f1c2e;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.ha-top-links {
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+.ha-top-links a {
+  color: var(--ha-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.ha-top-links a:hover { color: var(--ha-ink); }
+.ha-article {
+  width: min(760px, calc(100% - 3rem));
+  margin: 0 auto;
+  padding: 1.75rem 0 4rem;
+}
+.ha-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: var(--ha-muted);
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+.ha-meta a { color: inherit; text-decoration: none; }
+.ha-meta a:hover { color: var(--ha-ink); }
+.ha-chapter-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.ha-chapter-num {
+  flex: 0 0 auto;
+  min-width: 2.4rem;
+  height: 2.4rem;
+  padding: 0 0.55rem;
+  border-radius: 8px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.ha-chapter-head h1 {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  border: none;
+  padding: 0;
+  letter-spacing: -0.03em;
+}
+.ha-section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.ha-section-list a {
+  display: block;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ha-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.ha-section-list a:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-content h2 {
+  border-top: none;
+  padding-top: 0.2rem;
+  margin-top: 2.2rem;
+}
+.ha-content h2::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 3px;
+  background: var(--ha-accent);
+  margin-bottom: 0.75rem;
+  border-radius: 2px;
+}
+.ha-content p { margin: 0 0 1rem; text-indent: 2em; }
+.ha-sec-box {
+  margin: 0 0 1.75rem;
+  padding: 1rem 1.15rem 1.05rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-sec-box .label {
+  margin: 0 0 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ha-muted);
+  letter-spacing: 0.04em;
+}
+.ha-sec-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.ha-sec-box a {
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-size: 0.95rem;
+}
+.ha-sec-box a:hover { color: #1554b5; }
+.book-block {
+  margin: 0 0 1rem;
+  padding: 1rem 1.1rem 1.05rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.book-block h2 {
+  margin: 0 0 0.55rem;
+  font-size: 1.05rem;
+  border: none;
+  padding: 0;
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+}
+.book-block h2 a { text-decoration: none; color: var(--ha-ink); }
+.book-block h2 .num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 7px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.book-block ul.secs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #3a4652;
+  font-size: 0.92rem;
+  display: grid;
+  gap: 0.28rem;
+}
+.book-block ul.secs a { text-decoration: none; color: #3a4652; }
+.book-block ul.secs a:hover { color: #1554b5; }
+.figcap { color: var(--ha-muted); font-size: 0.9rem; text-align: center; margin: 0.25rem 0 1rem; }
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.table-wrap th, .table-wrap td { border: 1px solid var(--ha-line); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+.table-wrap th { background: #e8eef5; }
+.figure img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--ha-line); }
+.ha-footer-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ha-line);
+}
+.ha-footer-nav a {
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-weight: 600;
+}
+.ha-index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.ha-index-list a {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ha-ink);
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-index-list a:hover { border-color: #c5d0de; background: #f8fafc; }
+.ha-index-list .num {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 8px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.ha-author {
+  margin: 0 0 1.5rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-author h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+  border: none;
+  padding: 0;
+}
+.ha-author p { margin: 0; color: #3a4652; font-size: 0.98rem; }
+.ha-cover-thumb {
+  display: inline-block;
+  line-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--ha-line);
+  margin: 0 0 1.25rem;
+}
+.ha-cover-thumb img {
+  width: min(240px, 100%);
+  height: auto;
+  display: block;
+}
+@media (max-width: 920px) {
+  .ha-shell { grid-template-columns: 1fr; }
+  .ha-sidebar {
+    position: static;
+    height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--ha-line);
+  }
+  .ha-article { width: min(760px, calc(100% - 2rem)); }
+  .ha-topbar { padding: 0.85rem 1rem; }
+}
+</style>
+</head>
+<body class="hermes-book">
+  <div class="ha-shell">
+    <aside class="ha-sidebar" aria-label="目录">
+      <a class="ha-back" href="index.html">← 返回目录</a>
+      <div class="ha-toc-label">目录</div>
+      <ul class="ha-chapters">
+        <li data-chap="ch01.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第一章 重新理解AI组织</span></button><ul class="chap-subs"><li><a href="ch01.html#1-1-从数字化组织到AI原生组织">1.1 从数字化组织到AI原生组织</a></li><li><a href="ch01.html#1-2-AI如何重塑价值创造方式">1.2 AI如何重塑价值创造方式</a></li><li><a href="ch01.html#1-3-人力资源在AI组织中的新定位">1.3 人力资源在AI组织中的新定位</a></li><li><a href="ch01.html#1-4-本书框架与使用方法">1.4 本书框架与使用方法</a></li></ul></li><li data-chap="ch02.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第二章 AI时代的人力资源战略</span></button><ul class="chap-subs"><li><a href="ch02.html#2-1-从职能支撑到组织能力中枢">2.1 从职能支撑到组织能力中枢</a></li><li><a href="ch02.html#2-2-人机协同下的人才战略设计">2.2 人机协同下的人才战略设计</a></li><li><a href="ch02.html#2-3-组织目标-业务战略与HR战略对齐">2.3 组织目标、业务战略与HR战略对齐</a></li><li><a href="ch02.html#2-4-战略落地的关键指标与治理机制">2.4 战略落地的关键指标与治理机制</a></li></ul></li><li data-chap="ch03.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第三章 组织设计：为AI重构工作方式</span></button><ul class="chap-subs"><li><a href="ch03.html#3-1-岗位-流程与决策权的重新定义">3.1 岗位、流程与决策权的重新定义</a></li><li><a href="ch03.html#3-2-人机分工原则与协作界面设计">3.2 人机分工原则与协作界面设计</a></li><li><a href="ch03.html#3-3-敏捷组织-平台型组织与AI团队形态">3.3 敏捷组织、平台型组织与AI团队形态</a></li><li><a href="ch03.html#3-4-组织设计的常见误区与纠偏方法">3.4 组织设计的常见误区与纠偏方法</a></li></ul></li><li data-chap="ch04.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第四章 人才供应链：选人与识人的升级</span></button><ul class="chap-subs"><li><a href="ch04.html#4-1-AI场景下的人才画像与能力模型">4.1 AI场景下的人才画像与能力模型</a></li><li><a href="ch04.html#4-2-招聘漏斗重构-从海选到精准匹配">4.2 招聘漏斗重构：从海选到精准匹配</a></li><li><a href="ch04.html#4-3-AI辅助面试-测评与偏见治理">4.3 AI辅助面试、测评与偏见治理</a></li><li><a href="ch04.html#4-4-关键-稀缺与复合型人才获取策略">4.4 关键、稀缺与复合型人才获取策略</a></li></ul></li><li data-chap="ch05.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第五章 能力建设：让人与AI一起变强</span></button><ul class="chap-subs"><li><a href="ch05.html#5-1-从岗位技能到可迁移能力体系">5.1 从岗位技能到可迁移能力体系</a></li><li><a href="ch05.html#5-2-AI素养-业务素养与协作素养">5.2 AI素养、业务素养与协作素养</a></li><li><a href="ch05.html#5-3-学习路径设计与人机共学机制">5.3 学习路径设计与人机共学机制</a></li><li><a href="ch05.html#5-4-内部讲师-实践社区与知识沉淀">5.4 内部讲师、实践社区与知识沉淀</a></li></ul></li><li data-chap="ch06.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第六章 绩效与激励：驱动人机协同产出</span></button><ul class="chap-subs"><li><a href="ch06.html#6-1-结果-过程与协作质量的三维评价">6.1 结果、过程与协作质量的三维评价</a></li><li><a href="ch06.html#6-2-AI贡献度如何纳入绩效体系">6.2 AI贡献度如何纳入绩效体系</a></li><li><a href="ch06.html#6-3-激励设计-短期回报与长期价值平衡">6.3 激励设计：短期回报与长期价值平衡</a></li><li><a href="ch06.html#6-4-高管-专家与一线员工的差异化方案">6.4 高管、专家与一线员工的差异化方案</a></li></ul></li><li data-chap="ch07.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第七章 人才发展与继任：构建组织韧性</span></button><ul class="chap-subs"><li><a href="ch07.html#7-1-关键岗位盘点与继任风险识别">7.1 关键岗位盘点与继任风险识别</a></li><li><a href="ch07.html#7-2-AI时代的领导力画像变化">7.2 AI时代的领导力画像变化</a></li><li><a href="ch07.html#7-3-高潜识别-轮岗与加速成长">7.3 高潜识别、轮岗与加速成长</a></li><li><a href="ch07.html#7-4-从个人发展计划到组织能力地图">7.4 从个人发展计划到组织能力地图</a></li></ul></li><li data-chap="ch08.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第八章 文化与变革：让组织真正用起来</span></button><ul class="chap-subs"><li><a href="ch08.html#8-1-AI落地失败的组织文化根因">8.1 AI落地失败的组织文化根因</a></li><li><a href="ch08.html#8-2-信任-透明与负责任使用原则">8.2 信任、透明与负责任使用原则</a></li><li><a href="ch08.html#8-3-变革沟通-试点扩散与阻力管理">8.3 变革沟通、试点扩散与阻力管理</a></li><li><a href="ch08.html#8-4-HR如何成为变革催化者">8.4 HR如何成为变革催化者</a></li></ul></li><li data-chap="ch09.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第九章 数据驱动的人力资源运营</span></button><ul class="chap-subs"><li><a href="ch09.html#9-1-HR数据底座与关键指标体系">9.1 HR数据底座与关键指标体系</a></li><li><a href="ch09.html#9-2-从报表到洞察-诊断组织健康度">9.2 从报表到洞察：诊断组织健康度</a></li><li><a href="ch09.html#9-3-AI在HR运营中的应用边界">9.3 AI在HR运营中的应用边界</a></li><li><a href="ch09.html#9-4-隐私-合规与伦理红线">9.4 隐私、合规与伦理红线</a></li></ul></li><li class="open active" data-chap="ch10.html"><button type="button" class="chap-toggle" aria-expanded="true"><span class="chap-caret" aria-hidden="true">▸</span><span>第十章 落地路径：从试点到规模化</span></button><ul class="chap-subs"><li><a href="ch10.html#10-1-成熟度评估与优先级排序">10.1 成熟度评估与优先级排序</a></li><li><a href="ch10.html#10-2-90天启动计划与一年演进路线">10.2 90天启动计划与一年演进路线</a></li><li><a href="ch10.html#10-3-跨部门协同机制与投入产出评估">10.3 跨部门协同机制与投入产出评估</a></li><li><a href="ch10.html#10-4-典型场景案例与可复用打法清单">10.4 典型场景案例与可复用打法清单</a></li></ul></li><li data-chap="appendix.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>附录</span></button><ul class="chap-subs"><li><a href="appendix.html#A-1-工具箱-附录A">A.1 工具箱（附录A）</a></li><li><a href="appendix.html#A-2-能力模型与指标模板-附录B">A.2 能力模型与指标模板（附录B）</a></li><li><a href="appendix.html#A-3-自检清单与复盘表-附录C">A.3 自检清单与复盘表（附录C）</a></li></ul></li>
+      </ul>
+      <div class="ha-side-foot">
+        <a href="cover.html">封面</a>
+        <a href="index.html">目录</a>
+      </div>
+    </aside>
+    <div class="ha-main">
+      <header class="ha-topbar">
+        <a class="ha-brand" href="index.html">
+          <span class="ha-brand-mark">HR</span>
+          AI组织人力资源方法论
+        </a>
+        <div class="ha-top-links">
+          <a href="cover.html">封面</a>
+          <a href="index.html">目录</a>
+        </div>
+      </header>
+      <article class="ha-article">
+        <div class="ha-meta">
+          <div><a href="index.html">目录</a> / 第10章</div>
+          <div>陈晓娇 著</div>
+        </div>
+        <div class="ha-chapter-head">
+          <div class="ha-chapter-num">10</div>
+          <h1>第十章 落地路径：从试点到规模化</h1>
+        </div>
+        <nav class="ha-sec-box" aria-label="本章小节">
+          <div class="label">本章小节</div>
+          <ul>
+<li><a href="#10-1-成熟度评估与优先级排序">10.1 成熟度评估与优先级排序</a></li><li><a href="#10-2-90天启动计划与一年演进路线">10.2 90天启动计划与一年演进路线</a></li><li><a href="#10-3-跨部门协同机制与投入产出评估">10.3 跨部门协同机制与投入产出评估</a></li><li><a href="#10-4-典型场景案例与可复用打法清单">10.4 典型场景案例与可复用打法清单</a></li>
+          </ul>
+        </nav>
+        <div class="ha-content">
+<p>方法论如果不落到时间表与责任人，就只是观点。前面九章讨论了战略、组织、人才、能力、机制与治理，这一章回答一个更实际的问题：从下周一开始，具体做什么。落地不是把所有方法同时铺开，而是选对起点、控制节奏、建立协同、算清账。多数组织的失败不是因为方向错，而是因为动作太散：同时启动五个项目，每个都做到一半，资源耗尽，信心消散。</p>
+<p>这一章给出四个工具：成熟度评估与优先级排序，90天启动计划与一年演进路线，跨部门协同机制与投入产出评估，以及典型场景案例与可复用打法清单。四个工具可以单独使用，也可以组合成一套完整的落地方案。</p>
+<h2 id="10-1-成熟度评估与优先级排序">10.1 成熟度评估与优先级排序</h2>
+<p>成熟度评估的目的不是给组织打分排名，而是找到"下一步该做什么"。评估可以分五个等级，每个等级描述组织在人机协同上的实际状态。</p>
+<p>第一级是临时应用。个别员工自发使用AI工具，没有统一标准，没有数据治理，效果依赖个人。第二级是局部试点。有明确的试点项目，有基本的规则，但只覆盖少数场景。第三级是流程化。AI被嵌入关键流程，有明确的责任与审核机制，但尚未跨部门复制。第四级是规模化。多个业务单元在使用，平台能力可复用，治理机制常态化。第五级是原生。组织围绕人机协同设计工作，AI成为基础设施，缺了它业务无法正常运转。</p>
+<p>评估维度建议覆盖六个方面：战略与投入，是否有明确的能力目标与预算；组织与角色，是否有责任域、界面与决策分级；流程与场景，有多少场景实现了端到端协同；数据与平台，是否有可复用的数据与工具底座；人才与能力，是否有素养标准与培养机制；治理与合规，是否有边界、留痕与申诉。每个维度用三到五条可验证的证据评分，而不是凭印象打分。</p>
+<p>评分的证据要具体。例如"组织与角色"维度，不看有没有发文件，而看能否随机抽取三个关键产出，指认责任人；"治理与合规"维度，不看有没有制度，而看能否调出最近一次自动化决策的影响评估记录。证据法能防止自评虚高，也能让评估结果直接指向改进动作。评估可以由内部团队做，也可以请外部做，关键是评分标准统一、证据可查。</p>
+<p>优先级排序用三维矩阵：价值、可行性、风险。价值看业务影响，包括收入、成本、体验、风险降低；可行性看技术成熟度、数据就绪度、组织接受度；风险看合规、伦理、业务连续性。三个维度各打一到五分，画出矩阵。优先级最高的不是"价值最大"的，而是"价值较高、可行性较高、风险可控"的。很多企业选了价值最大但可行性最低的场景，做了两年没结果，反而拖累了其他项目。</p>
+<p>排序之后还要做组合管理。把候选场景分成三类：保底类，成功率高、收益明确，用于建立信心；押注类，潜力大但不确定，用于探索上限；平台类，支撑多个场景的底座，用于长期能力。三类要按比例配置资源，例如保底类占四成、押注类占三成、平台类占三成。比例可以调整，但不能只有保底类，否则组织永远在浅层应用；也不能只有押注类，否则风险过高。</p>
+<p>排序还要考虑依赖关系。有些场景依赖数据打通，有些依赖权限开放，有些依赖能力认证。依赖不解决，场景就推不动。比较稳妥的做法是把依赖画成一张图，先做"解锁型"项目：它们本身收益不一定最大，但能让后续多个场景可行。例如统一员工主数据、建立数据权限框架、搭建智能体运行平台，这些项目往往不显眼，却是规模化的前提。</p>
+<p>一个合成案例可以说明排序的作用。某制造企业最初想做"全流程智能工厂"，评估后发现数据底座薄弱、组织职责不清，可行性只有两分。企业改为先做三个保底场景：设备点检提醒、质检异常分类、备件库存预测。三个场景在半年内见效，团队建立了信心，数据底座也在过程中逐步补齐。第二年才启动产线整体优化。这个案例的关键不是放弃野心，而是把野心拆成可执行的顺序。</p>
+<p>评估的组织方式影响结果的可信度。建议由HR牵头、业务与技术参与，组成三到五人的评估小组，用半天到一天完成。流程可以是：先各自独立打分，再集中校准差异。校准环节最有价值，因为分歧往往暴露了证据不足或标准理解不一致。校准后形成一份"成熟度画像"，标出每个维度的等级与关键证据。画像不必对外发布，但要作为年度规划的依据。</p>
+<p>自评容易出三种偏差。第一种是高估执行，把"发了文件"当成"已落地"，把"做了培训"当成"有能力"。第二种是高估覆盖，把"一个部门在用"当成"组织在用"。第三种是低估治理，忽略数据权限、责任界定、申诉机制这些不显眼但关键的部分。三种偏差的共同解药是证据：每个评分都要能指向具体的记录、案例或数据。指不出来，就降一级。</p>
+<h2 id="10-2-90天启动计划与一年演进路线">10.2 90天启动计划与一年演进路线</h2>
+<p>90天是建立势头的合理周期。太短，做不出结果；太长，注意力会转移。90天可以分三段，每段三十天，各有明确目标。</p>
+<p>第一个三十天做诊断与选场景。动作包括：完成成熟度评估，访谈关键角色，梳理候选场景，确定一个试点场景与一个平台型项目，明确责任人与资源。输出是一页纸的启动方案，写清楚目标、范围、指标、风险与退出条件。这一段的常见错误是场景选得太大，想在一个季度内改造整条业务链。正确的做法是选一个"端到端可闭环"的小场景，例如一条产品线的报价流程、一个区域的客服分流。</p>
+<p>第二个三十天做设计与小范围试点。动作包括：重写流程与责任域，设计人机界面，搭建最小可用的工具与数据，培训试点团队，开始运行。输出是流程说明、界面说明、决策台账、试点数据。这一段的常见错误是只做技术不做设计，系统上线了，但没人定义谁审核、异常找谁。正确的做法是把界面四要素写出来，并在试点前做一次桌面演练。</p>
+<p>第三个三十天做验证与复盘。动作包括：收集数据，评估效果，访谈使用者，识别问题，决定是扩大、调整还是停止。输出是一份复盘报告与下一步建议。这一段的常见错误是把"上线"当成"成功"，不看使用深度与业务结果。正确的做法是设定明确的验证标准，例如使用率达到某个水平、处理周期缩短多少、错误率控制在什么范围。达不到就调整，不硬推。</p>
+<p>一年演进可以分四个季度，每个季度有主题。第一季度是试点验证，目标是跑通一个闭环，建立基本规则。第二季度是复制扩散，目标是把试点经验做成复制包，在二到三个相似场景落地。第三季度是制度化，目标是把界面、决策分级、评价与治理写进制度与系统，形成常态。第四季度是规模化与评估，目标是扩大覆盖，评估投入产出，规划下一年。</p>
+<p>四个季度的节奏不是固定的，可以根据组织吸收能力调整。关键是要有"阶段门槛"：上一个阶段的核心指标不达标，不进入下一阶段。门槛不是为了控制，而是为了防止"带病扩张"。一个常见失败是在试点还没跑通时就大规模推广，结果问题被放大，修复成本极高。</p>
+<p>路线图要写成"可检查"的形式，而不是愿景图。每一阶段至少写清楚四件事：要达成的结果，关键的交付物，责任人，验证方式。四件事齐全，路线图才能被跟踪。愿景可以有，但要放在路线图之上，不能替代路线图。</p>
+<p>时间陷阱有三个，值得提前避开。第一个是"等数据齐了再开始"，数据永远不齐，正确做法是带着数据缺口启动，边做边补。第二个是"等制度定了再试点"，制度需要在实践中形成，先有最小规则，再逐步完善。第三个是"等人都学会了再推广"，人的学习只能在实践中发生，培训和试点要同步。三个陷阱的共同点是追求完美再行动，结果永远不行动。</p>
+<p>一个合成案例可以说明90天的价值。某零售企业想在门店推行智能排班，第一次尝试直接全面上线，结果排班冲突频发，店长集体抵制，项目停摆。第二次改为90天试点：第一个月选十家门店做诊断，第二个月在两家门店试运行并每天收集反馈，第三个月评估并调整规则。试点期间发现，问题不在算法，而在约束条件没有写全：员工的可上班时段、技能匹配、法定休息要求，都需要明确输入。调整后，排班冲突大幅下降，第四个月才向区域推广。这个案例的教训很直接：省掉试点的时间，会在推广时加倍偿还。</p>
+<p>90天里HR要承担的具体工作，可以列成一张责任表。启动阶段，HR负责组织诊断、协调访谈、整理场景清单；设计阶段，HR负责责任域与界面的设计、能力要求的梳理、培训方案的设计；试点阶段，HR负责使用反馈的收集、员工疑虑的处理、激励与考核的衔接；复盘阶段，HR负责数据分析、经验整理、复制包的编写。四项工作都不涉及技术实现，但缺一项，试点就会在"人的部分"卡住。</p>
+<p>资源投入要有清单。90天内至少需要四类资源：一名有决策权的项目负责人，时间投入不低于五成；一个跨部门小组，每个部门至少一名固定成员；一笔小额预算，用于工具试用、外部支持与激励；一块共享空间，用于文档、数据与决策记录。四类资源中，项目负责人最容易虚设：挂名但不投入，导致协调失效。选人时要明确时间承诺，而不是只看职级。</p>
+<p>里程碑要可验证，不能只是日期。可以按"交付物加验证方式"来定义，例如第一个三十天结束时，交付一页纸启动方案并由指导委员会确认；第二个三十天结束时，交付流程说明与界面说明，并完成一次桌面演练；第三个三十天结束时，交付试点数据与复盘报告，并作出扩大、调整或停止的决定。每个里程碑都有明确的"通过标准"，避免"差不多算完成"。</p>
+<h2 id="10-3-跨部门协同机制与投入产出评估">10.3 跨部门协同机制与投入产出评估</h2>
+<p>AI落地天然是跨部门的事，但多数组织的协作机制是按职能设计的，导致"谁都能管、谁都不负责"。建立协同机制，先要明确角色。</p>
+<p>CEO或业务一把手负责定方向与资源。具体动作包括：确定年度能力目标，批准预算，主持季度复盘，处理跨部门冲突。没有一把手参与，变革很容易在部门利益面前停摆。CHO负责组织与人的设计，包括责任域、界面、能力、评价与治理。CIO或数字化负责人负责技术与数据底座，包括平台、集成、安全。CFO负责投入产出评估与预算管理。业务负责人负责场景选择、流程设计与结果承担。法务与合规负责边界审查。员工代表参与界面设计与反馈。</p>
+<p>角色清楚之后，要有治理架构。比较常见的是三层：指导委员会，由一把手与核心职能负责人组成，季度开会，决定方向与资源；项目管理办公室，负责跨项目的协调、进度跟踪、风险管理；场景小组，由业务、技术、HR组成，负责单个场景的设计与落地。三层之中，场景小组最关键，因为它直接对结果负责。PMO要防止变成"收周报的部门"，它的价值在于解决跨项目的依赖与冲突。</p>
+<p>协同机制要解决三个具体问题。第一是决策效率，跨部门事项谁拍板、多久拍板。建议设置"默认同意"规则：在约定时间内不反对即视为同意，避免无限等待。第二是资源调配，人从哪里来、预算谁出。建议采用"项目制借调"，明确借调期限与考核方式，避免人员两头挂。第三是信息同步，进展如何透明。建议用一块共享看板，项目状态、风险、决策记录都在上面，减少反复对齐。</p>
+<p>投入产出评估要有框架，不能只算"省了多少人"。成本至少包括五类：工具与订阅费，系统集成与数据治理，模型运营与维护，培训与变革成本，治理与合规成本。后三类常被低估，尤其是变革成本：管理者时间、员工学习、试错损失，都是真实投入。收益至少包括四类：效率提升，即同样产出需要更少时间；质量改善，即错误率、返修率、投诉率下降；收入增长，即更快响应、更多覆盖、更好体验；风险降低，即合规、安全、连续性方面的损失减少。</p>
+<p>评估方法可以用"对比基线"：在项目开始前记录关键指标，运行三到六个月后对比。对比时要控制其他变量，例如业务量变化、人员变动、市场环境。做不到严格对照时，至少要做趋势对比与访谈验证，避免把自然波动当成项目收益。回收期是一个实用指标：总投入除以年度净收益，得出回收年限。回收期超过三年的项目，要重新审视必要性，除非它有明显的战略价值。</p>
+<p>无形收益也要承认，但不能滥用。"员工体验提升""组织能力增强"这类说法如果没有具体证据，很容易变成项目失败的遮羞布。比较严谨的做法是把无形收益转化为可观察的指标，例如关键岗位到岗时间、内部流动率、管理者协调时长、员工对工具的采纳深度。转化不了，就诚实地说"这项收益暂无法量化"，而不是编一个数字。</p>
+<p>评估结果要用于决策，而不是用于证明。评估发现项目无效，就应该调整或停止；发现有效，就应该扩大或复制。很多组织的评估变成"为项目辩护"，预算已经花了，结论只能是成功。这种评估没有意义。要让评估有约束力，需要在立项时就约定"停止条件"，例如六个月内使用率不达标就停止。事先约定，事后才敢说真话。</p>
+<p>一个合成案例可以说明评估的作用。某企业在客服中心投入智能分流系统，最初只算"节省人力"，回收期看起来很短。评估时把培训、流程改造、质检增加的投入算进去，回收期延长了一年。同时发现，系统带来的客户满意度提升与重复来电减少，是没有计入的收益。综合计算后，项目仍然值得做，但推广节奏被调整为"先优化流程，再扩大覆盖"。这个案例说明，算清账不是为了否决项目，而是为了做对节奏。</p>
+<p>协同机制有三种典型失败模式。第一种是"委员会空转"，开会但没有决策权，讨论停留在汇报层面。解药是给委员会明确的决策事项清单与时限，例如预算超过某额度必须上会，其他事项由项目负责人决定。第二种是"PMO 变成统计局"，只收集进度，不解决问题。解药是让PMO负责跨项目依赖与风险，考核它"解决了多少阻塞"，而不是"收了多少周报"。第三种是"场景小组无权"，业务、技术、HR坐在一起，但没有人能拍板。解药是给小组一名有决策权的组长，并明确哪些事项可以现场决定。</p>
+<p>会议节奏要与决策节奏匹配。建议设三种会议：周会，十五分钟，同步进度与阻塞，不做决策；月度评审，一小时，检查指标与风险，决定资源调整；季度复盘，半天，评估组合与路线，决定增减。三种会议各有边界，混在一起会导致会议冗长且无效。会议记录要公开，尤其是决策与责任人，避免"会开完了没人知道该做什么"。</p>
+<h2 id="10-4-典型场景案例与可复用打法清单">10.4 典型场景案例与可复用打法清单</h2>
+<p>场景一：招聘流程的端到端重构。某企业把招聘拆成五个环节：需求确认、寻源、筛选、面试、录用。AI承接寻源与初筛，人负责需求判断、面试与录用。重构的关键在三处：需求确认阶段由用人经理与HR共同定义"关键判断"，而不是只写任职资格；初筛阶段设置人工复核与申诉，避免误杀；录用阶段保留人工签字，并记录判断依据。结果是招聘周期缩短，试用期通过率上升。可复用的打法是：先改标准，再改流程，最后上工具。</p>
+<p>场景二：制造质检的人机分工。某企业把质检从"人眼抽检"改为"模型全检加人工处置"。分工设计遵循风险优先：模型负责全量初判，人负责异常判定与模型维护；决策分级明确，低风险自动放行，中风险人工复核，高风险升级；界面设计包含抽样复核与回训机制。结果是漏检率下降，质检人员转为异常处置与数据运营。可复用的打法是：先分层，再分工，最后分权。</p>
+<p>场景三：专业服务的知识管理。某咨询机构把项目经验沉淀为可调用资产：案例库、方法模板、行业数据、专家网络。AI负责检索、摘要、初稿，顾问负责判断与客户沟通。关键设计是"贡献可见"：谁写的案例被引用，谁的方法被复用，都有记录并纳入评价。结果是新人上手更快，方案质量更稳定。可复用的打法是：先定义"什么值得沉淀"，再设计"如何被使用"，最后解决"谁来维护"。</p>
+<p>场景四：研发团队的协作提效。某软件企业把需求梳理、代码评审、测试用例生成交给智能体辅助，人负责架构判断、方案取舍与最终评审。关键设计有三处：需求阶段由产品与研发共同确认"验收判断"，避免模型生成的方案偏离真实目标；评审阶段要求人在系统中留下判断依据，形成可追溯的决策账；测试阶段设置人工抽检与缺陷回流，把模型错误转化为训练素材。结果是需求返工减少，评审效率提升，但企业同时发现一个新问题：初级工程师的成长速度变慢，因为他们少了大量"从错误中学习"的机会。企业随后增加"判断训练"环节，让新人在受控环境中独立做判断并与资深者对比。这个案例说明，效率提升与能力成长可能相互冲突，落地时必须同时设计。</p>
+<p>场景五：职能共享中心的转型。某集团把薪酬、社保、证明、入离职等事务集中到共享中心，用智能体承接咨询分流与流程触发。转型的关键不在技术，而在岗位重设：原本按事务分工的岗位，改为按"员工场景"分工，每个人负责一类场景的全流程，包括判断、异常处理、体验优化。岗位重设后，员工的工作从"处理单据"变为"解决问题"，满意度与留任率都有改善。可复用的打法是：先重设岗位，再定义界面，最后引入工具。</p>
+<p>三个场景的共同规律是：技术只承担执行，人承担判断与责任；流程围绕判断重新排列，而不是围绕工具；评价与激励同步调整，否则新流程会被旧考核拉回原形。</p>
+<p>可复用的打法可以整理成一份清单，供不同起点使用。选场景时，优先选高频、痛点强、结果可测、风险可控的；做设计时，先写责任域与界面，再谈工具；做试点时，选自愿者，设退出条件，留可复制包；做推广时，先同后异，用种子团队带教；做治理时，边界前置，留痕与申诉同步；做评估时，算全成本，设停止条件；做变革时，讲工作叙事，不将技术叙事；做能力时，把学习嵌入任务；做数据时，先统口径，再谈模型；做文化时，领导者先示范。</p>
+<p>这份清单不是步骤，而是检查项。每推进一步，回头看看对应的检查项是否成立。不成立，就停下来补，而不是继续往前冲。落地最大的风险不是慢，而是带着问题快跑。</p>
+<p>规模化阶段要盯住四个指标，防止"看起来铺开了、实际没落地"。第一个是覆盖深度，即目标用户中使用核心功能的比例，而不是登录过的比例。第二个是自主运行，即无需人工兜底可以完成的任务比例。第三个是复用率，即新场景直接复用既有平台与规则的比例，复用率低说明每个场景都在重造轮子。第四个是问题闭合率，即已发现的缺陷与风险被修复并回流到系统的比例。四个指标同时改善，才算真正规模化；只有覆盖扩大而其他三项停滞，通常意味着在"堆项目"。</p>
+<p>规模化的另一个考验是"人"的供给。场景越多，需要的判断者越多，而这些判断者不能靠临时指派。组织需要建立一条能力供给线：新员工入职即接受基础素养训练，关键场景设置认证，认证后进入人才池，池中人员按场景调配。这条线不显眼，却决定了规模化的上限。很多企业项目铺得很快，最后因为"没有人能审核"而停摆。</p>
+<p>最后需要说明的是，落地路径没有普适的最优解。组织规模、行业属性、技术基础、文化特征都会影响节奏。有的企业适合从招聘切入，因为HR主导、风险低；有的企业适合从生产切入，因为痛点强、收益直观；有的企业适合从知识管理切入，因为专业密度高、复用价值大。选择起点时，不必追求"最先进"，要追求"最能形成闭环"。闭环一旦形成，组织就有了自己的学习能力，后面的路会越走越顺。</p>
+<p>AI组织的建设是一场长跑，不是一次冲刺。</p>
+<p>如果把全书压缩成一张行动卡，可以写四句话。第一句是先把工作重新组织，再谈工具，因为工具只能放大既有的组织逻辑。第二句是把判断留给人，把执行交给系统，并为每个判断指定责任人。第三句是用指标与复盘驱动改进，不用口号与运动。第四句是守住数据与伦理边界，因为一次事故足以抵消多年积累。四句话对应组织设计、责任分配、运营机制与治理四条主线，也是本书十章的共同骨架。它需要战略上的定力，组织上的设计，人才上的耐心，机制上的约束。四者缺一，都会在某个阶段卡住。愿意在这四件事上持续投入的组织，最终获得的不是一套工具，而是一种能力：在变化中重新组织工作的能力。这种能力，才是AI时代真正的护城河。</p>
+        </div>
+        <div class="ha-footer-nav">
+          <a href="ch09.html">← 上一页</a>
+          <a href="appendix.html">下一页 →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+  
+<script>
+(function () {
+  var list = document.querySelector(".ha-chapters");
+  if (!list) return;
+  list.addEventListener("click", function (e) {
+    var btn = e.target.closest(".chap-toggle");
+    if (!btn || !list.contains(btn)) return;
+    var li = btn.closest("li[data-chap]");
+    if (!li) return;
+    var willOpen = !li.classList.contains("open");
+    list.querySelectorAll("li[data-chap]").forEach(function (item) {
+      item.classList.remove("open");
+      var b = item.querySelector(".chap-toggle");
+      if (b) b.setAttribute("aria-expanded", "false");
+    });
+    if (willOpen) {
+      li.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      // 第一次展开时进入该章正文；已在本章则只展开小节
+      var href = li.getAttribute("data-chap");
+      var file = (location.pathname.split("/").pop() || "");
+      if (href && file !== href && !file.endsWith("/" + href)) {
+        location.href = href;
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第四章 人才供应链：选人与识人的升级 · AI组织人力资源方法论</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+:root {
+  --ha-bg: #f5f7fa;
+  --ha-sidebar: #f5f7fa;
+  --ha-ink: #0f1c2e;
+  --ha-muted: #6b7a8d;
+  --ha-line: #dde3eb;
+  --ha-active-bg: #e8eef5;
+  --ha-accent: #1f6feb;
+  --ha-accent-ink: #ffffff;
+}
+body.hermes-book {
+  background: var(--ha-bg) !important;
+  color: var(--ha-ink);
+  font-size: 17px;
+  line-height: 1.75;
+}
+body.hermes-book a { color: #1554b5; }
+body.hermes-book a:hover { color: var(--ha-ink); }
+.ha-shell {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  min-height: 100vh;
+}
+.ha-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1.25rem 1rem 1.5rem;
+  border-right: 1px solid var(--ha-line);
+  background: var(--ha-sidebar);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.ha-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--ha-muted) !important;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.ha-back:hover { color: var(--ha-ink) !important; }
+.ha-toc-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ha-muted);
+  letter-spacing: 0.06em;
+  margin: 0.35rem 0 0.15rem;
+}
+.ha-chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.ha-chapters > li {
+  border-radius: 10px;
+}
+.ha-chapters .chap-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: var(--ha-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+.ha-chapters .chap-toggle:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-chapters > li.open > .chap-toggle,
+.ha-chapters > li.active > .chap-toggle {
+  background: var(--ha-active-bg);
+  color: var(--ha-ink);
+  font-weight: 600;
+  border-left-color: var(--ha-accent);
+}
+.ha-chapters .chap-caret {
+  flex: 0 0 auto;
+  width: 0.9rem;
+  margin-top: 0.15rem;
+  color: inherit;
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+}
+.ha-chapters > li.open > .chap-toggle .chap-caret {
+  transform: rotate(90deg);
+}
+.ha-chapters .chap-subs {
+  list-style: none;
+  margin: 0 0 0.35rem;
+  padding: 0 0.4rem 0.25rem 1.35rem;
+  display: none;
+}
+.ha-chapters > li.open > .chap-subs {
+  display: grid;
+  gap: 0.12rem;
+}
+.ha-chapters .chap-subs a {
+  display: block;
+  padding: 0.32rem 0.55rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ha-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.ha-chapters .chap-subs a:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-chapters .chap-subs a.active {
+  color: var(--ha-ink);
+  font-weight: 600;
+  background: rgba(31,111,235,0.08);
+}
+.ha-side-foot {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ha-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.ha-side-foot a {
+  color: var(--ha-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.ha-side-foot a:hover { color: var(--ha-ink); }
+.ha-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ha-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 2rem;
+  border-bottom: 1px solid var(--ha-line);
+  background: rgba(245,247,250,0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.ha-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-weight: 650;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
+}
+.ha-brand-mark {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 6px;
+  background: #0f1c2e;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.ha-top-links {
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+.ha-top-links a {
+  color: var(--ha-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.ha-top-links a:hover { color: var(--ha-ink); }
+.ha-article {
+  width: min(760px, calc(100% - 3rem));
+  margin: 0 auto;
+  padding: 1.75rem 0 4rem;
+}
+.ha-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: var(--ha-muted);
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+.ha-meta a { color: inherit; text-decoration: none; }
+.ha-meta a:hover { color: var(--ha-ink); }
+.ha-chapter-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.ha-chapter-num {
+  flex: 0 0 auto;
+  min-width: 2.4rem;
+  height: 2.4rem;
+  padding: 0 0.55rem;
+  border-radius: 8px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.ha-chapter-head h1 {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  border: none;
+  padding: 0;
+  letter-spacing: -0.03em;
+}
+.ha-section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.ha-section-list a {
+  display: block;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ha-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.ha-section-list a:hover {
+  background: rgba(15,28,46,0.04);
+  color: var(--ha-ink);
+}
+.ha-content h2 {
+  border-top: none;
+  padding-top: 0.2rem;
+  margin-top: 2.2rem;
+}
+.ha-content h2::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 3px;
+  background: var(--ha-accent);
+  margin-bottom: 0.75rem;
+  border-radius: 2px;
+}
+.ha-content p { margin: 0 0 1rem; text-indent: 2em; }
+.ha-sec-box {
+  margin: 0 0 1.75rem;
+  padding: 1rem 1.15rem 1.05rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-sec-box .label {
+  margin: 0 0 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ha-muted);
+  letter-spacing: 0.04em;
+}
+.ha-sec-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.ha-sec-box a {
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-size: 0.95rem;
+}
+.ha-sec-box a:hover { color: #1554b5; }
+.book-block {
+  margin: 0 0 1rem;
+  padding: 1rem 1.1rem 1.05rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.book-block h2 {
+  margin: 0 0 0.55rem;
+  font-size: 1.05rem;
+  border: none;
+  padding: 0;
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+}
+.book-block h2 a { text-decoration: none; color: var(--ha-ink); }
+.book-block h2 .num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 7px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.book-block ul.secs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #3a4652;
+  font-size: 0.92rem;
+  display: grid;
+  gap: 0.28rem;
+}
+.book-block ul.secs a { text-decoration: none; color: #3a4652; }
+.book-block ul.secs a:hover { color: #1554b5; }
+.figcap { color: var(--ha-muted); font-size: 0.9rem; text-align: center; margin: 0.25rem 0 1rem; }
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.table-wrap th, .table-wrap td { border: 1px solid var(--ha-line); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+.table-wrap th { background: #e8eef5; }
+.figure img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--ha-line); }
+.ha-footer-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ha-line);
+}
+.ha-footer-nav a {
+  text-decoration: none;
+  color: var(--ha-ink);
+  font-weight: 600;
+}
+.ha-index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.ha-index-list a {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ha-ink);
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-index-list a:hover { border-color: #c5d0de; background: #f8fafc; }
+.ha-index-list .num {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 8px;
+  background: var(--ha-accent);
+  color: var(--ha-accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.ha-author {
+  margin: 0 0 1.5rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--ha-line);
+}
+.ha-author h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+  border: none;
+  padding: 0;
+}
+.ha-author p { margin: 0; color: #3a4652; font-size: 0.98rem; }
+.ha-cover-thumb {
+  display: inline-block;
+  line-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--ha-line);
+  margin: 0 0 1.25rem;
+}
+.ha-cover-thumb img {
+  width: min(240px, 100%);
+  height: auto;
+  display: block;
+}
+@media (max-width: 920px) {
+  .ha-shell { grid-template-columns: 1fr; }
+  .ha-sidebar {
+    position: static;
+    height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--ha-line);
+  }
+  .ha-article { width: min(760px, calc(100% - 2rem)); }
+  .ha-topbar { padding: 0.85rem 1rem; }
+}
+</style>
+</head>
+<body class="hermes-book">
+  <div class="ha-shell">
+    <aside class="ha-sidebar" aria-label="目录">
+      <a class="ha-back" href="index.html">← 返回目录</a>
+      <div class="ha-toc-label">目录</div>
+      <ul class="ha-chapters">
+        <li data-chap="ch01.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第一章 重新理解AI组织</span></button><ul class="chap-subs"><li><a href="ch01.html#1-1-从数字化组织到AI原生组织">1.1 从数字化组织到AI原生组织</a></li><li><a href="ch01.html#1-2-AI如何重塑价值创造方式">1.2 AI如何重塑价值创造方式</a></li><li><a href="ch01.html#1-3-人力资源在AI组织中的新定位">1.3 人力资源在AI组织中的新定位</a></li><li><a href="ch01.html#1-4-本书框架与使用方法">1.4 本书框架与使用方法</a></li></ul></li><li data-chap="ch02.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第二章 AI时代的人力资源战略</span></button><ul class="chap-subs"><li><a href="ch02.html#2-1-从职能支撑到组织能力中枢">2.1 从职能支撑到组织能力中枢</a></li><li><a href="ch02.html#2-2-人机协同下的人才战略设计">2.2 人机协同下的人才战略设计</a></li><li><a href="ch02.html#2-3-组织目标-业务战略与HR战略对齐">2.3 组织目标、业务战略与HR战略对齐</a></li><li><a href="ch02.html#2-4-战略落地的关键指标与治理机制">2.4 战略落地的关键指标与治理机制</a></li></ul></li><li data-chap="ch03.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第三章 组织设计：为AI重构工作方式</span></button><ul class="chap-subs"><li><a href="ch03.html#3-1-岗位-流程与决策权的重新定义">3.1 岗位、流程与决策权的重新定义</a></li><li><a href="ch03.html#3-2-人机分工原则与协作界面设计">3.2 人机分工原则与协作界面设计</a></li><li><a href="ch03.html#3-3-敏捷组织-平台型组织与AI团队形态">3.3 敏捷组织、平台型组织与AI团队形态</a></li><li><a href="ch03.html#3-4-组织设计的常见误区与纠偏方法">3.4 组织设计的常见误区与纠偏方法</a></li></ul></li><li class="open active" data-chap="ch04.html"><button type="button" class="chap-toggle" aria-expanded="true"><span class="chap-caret" aria-hidden="true">▸</span><span>第四章 人才供应链：选人与识人的升级</span></button><ul class="chap-subs"><li><a href="ch04.html#4-1-AI场景下的人才画像与能力模型">4.1 AI场景下的人才画像与能力模型</a></li><li><a href="ch04.html#4-2-招聘漏斗重构-从海选到精准匹配">4.2 招聘漏斗重构：从海选到精准匹配</a></li><li><a href="ch04.html#4-3-AI辅助面试-测评与偏见治理">4.3 AI辅助面试、测评与偏见治理</a></li><li><a href="ch04.html#4-4-关键-稀缺与复合型人才获取策略">4.4 关键、稀缺与复合型人才获取策略</a></li></ul></li><li data-chap="ch05.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第五章 能力建设：让人与AI一起变强</span></button><ul class="chap-subs"><li><a href="ch05.html#5-1-从岗位技能到可迁移能力体系">5.1 从岗位技能到可迁移能力体系</a></li><li><a href="ch05.html#5-2-AI素养-业务素养与协作素养">5.2 AI素养、业务素养与协作素养</a></li><li><a href="ch05.html#5-3-学习路径设计与人机共学机制">5.3 学习路径设计与人机共学机制</a></li><li><a href="ch05.html#5-4-内部讲师-实践社区与知识沉淀">5.4 内部讲师、实践社区与知识沉淀</a></li></ul></li><li data-chap="ch06.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第六章 绩效与激励：驱动人机协同产出</span></button><ul class="chap-subs"><li><a href="ch06.html#6-1-结果-过程与协作质量的三维评价">6.1 结果、过程与协作质量的三维评价</a></li><li><a href="ch06.html#6-2-AI贡献度如何纳入绩效体系">6.2 AI贡献度如何纳入绩效体系</a></li><li><a href="ch06.html#6-3-激励设计-短期回报与长期价值平衡">6.3 激励设计：短期回报与长期价值平衡</a></li><li><a href="ch06.html#6-4-高管-专家与一线员工的差异化方案">6.4 高管、专家与一线员工的差异化方案</a></li></ul></li><li data-chap="ch07.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第七章 人才发展与继任：构建组织韧性</span></button><ul class="chap-subs"><li><a href="ch07.html#7-1-关键岗位盘点与继任风险识别">7.1 关键岗位盘点与继任风险识别</a></li><li><a href="ch07.html#7-2-AI时代的领导力画像变化">7.2 AI时代的领导力画像变化</a></li><li><a href="ch07.html#7-3-高潜识别-轮岗与加速成长">7.3 高潜识别、轮岗与加速成长</a></li><li><a href="ch07.html#7-4-从个人发展计划到组织能力地图">7.4 从个人发展计划到组织能力地图</a></li></ul></li><li data-chap="ch08.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第八章 文化与变革：让组织真正用起来</span></button><ul class="chap-subs"><li><a href="ch08.html#8-1-AI落地失败的组织文化根因">8.1 AI落地失败的组织文化根因</a></li><li><a href="ch08.html#8-2-信任-透明与负责任使用原则">8.2 信任、透明与负责任使用原则</a></li><li><a href="ch08.html#8-3-变革沟通-试点扩散与阻力管理">8.3 变革沟通、试点扩散与阻力管理</a></li><li><a href="ch08.html#8-4-HR如何成为变革催化者">8.4 HR如何成为变革催化者</a></li></ul></li><li data-chap="ch09.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第九章 数据驱动的人力资源运营</span></button><ul class="chap-subs"><li><a href="ch09.html#9-1-HR数据底座与关键指标体系">9.1 HR数据底座与关键指标体系</a></li><li><a href="ch09.html#9-2-从报表到洞察-诊断组织健康度">9.2 从报表到洞察：诊断组织健康度</a></li><li><a href="ch09.html#9-3-AI在HR运营中的应用边界">9.3 AI在HR运营中的应用边界</a></li><li><a href="ch09.html#9-4-隐私-合规与伦理红线">9.4 隐私、合规与伦理红线</a></li></ul></li><li data-chap="ch10.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>第十章 落地路径：从试点到规模化</span></button><ul class="chap-subs"><li><a href="ch10.html#10-1-成熟度评估与优先级排序">10.1 成熟度评估与优先级排序</a></li><li><a href="ch10.html#10-2-90天启动计划与一年演进路线">10.2 90天启动计划与一年演进路线</a></li><li><a href="ch10.html#10-3-跨部门协同机制与投入产出评估">10.3 跨部门协同机制与投入产出评估</a></li><li><a href="ch10.html#10-4-典型场景案例与可复用打法清单">10.4 典型场景案例与可复用打法清单</a></li></ul></li><li data-chap="appendix.html"><button type="button" class="chap-toggle" aria-expanded="false"><span class="chap-caret" aria-hidden="true">▸</span><span>附录</span></button><ul class="chap-subs"><li><a href="appendix.html#A-1-工具箱-附录A">A.1 工具箱（附录A）</a></li><li><a href="appendix.html#A-2-能力模型与指标模板-附录B">A.2 能力模型与指标模板（附录B）</a></li><li><a href="appendix.html#A-3-自检清单与复盘表-附录C">A.3 自检清单与复盘表（附录C）</a></li></ul></li>
+      </ul>
+      <div class="ha-side-foot">
+        <a href="cover.html">封面</a>
+        <a href="index.html">目录</a>
+      </div>
+    </aside>
+    <div class="ha-main">
+      <header class="ha-topbar">
+        <a class="ha-brand" href="index.html">
+          <span class="ha-brand-mark">HR</span>
+          AI组织人力资源方法论
+        </a>
+        <div class="ha-top-links">
+          <a href="cover.html">封面</a>
+          <a href="index.html">目录</a>
+        </div>
+      </header>
+      <article class="ha-article">
+        <div class="ha-meta">
+          <div><a href="index.html">目录</a> / 第04章</div>
+          <div>陈晓娇 著</div>
+        </div>
+        <div class="ha-chapter-head">
+          <div class="ha-chapter-num">04</div>
+          <h1>第四章 人才供应链：选人与识人的升级</h1>
+        </div>
+        <nav class="ha-sec-box" aria-label="本章小节">
+          <div class="label">本章小节</div>
+          <ul>
+<li><a href="#4-1-AI场景下的人才画像与能力模型">4.1 AI场景下的人才画像与能力模型</a></li><li><a href="#4-2-招聘漏斗重构-从海选到精准匹配">4.2 招聘漏斗重构：从海选到精准匹配</a></li><li><a href="#4-3-AI辅助面试-测评与偏见治理">4.3 AI辅助面试、测评与偏见治理</a></li><li><a href="#4-4-关键-稀缺与复合型人才获取策略">4.4 关键、稀缺与复合型人才获取策略</a></li>
+          </ul>
+        </nav>
+        <div class="ha-content">
+<p>招聘是所有HR职能里最早被AI改造的环节，也是误解最深的一个。多数企业把AI用在"筛简历更快"上，简历处理量上去了，招聘质量却没有变化；面试还是凭感觉，录用还是看履历，试用期还是靠运气。真正需要升级的不是筛选速度，而是整条人才供应链的判断逻辑：用什么标准识别人，用什么信号预测胜任，用什么机制降低看错人的代价。</p>
+<p>这一章按供应链的顺序展开：先重建人才画像与能力模型，再重构招聘漏斗，然后讨论AI辅助评估的边界与偏见治理，最后给出关键、稀缺与复合型人才的获取策略。核心主张只有一句：AI让"识人"的成本下降，但不会让"看错人"的代价下降，因此标准与验证机制比工具更重要。</p>
+<h2 id="4-1-AI场景下的人才画像与能力模型">4.1 AI场景下的人才画像与能力模型</h2>
+<p>传统胜任力模型通常由三部分组成：知识技能、行为特质、经验要求。它在岗位稳定的时代很有效，因为岗位任务变化慢，过去的胜任者可以作为样本。AI场景下，这三个部分都遇到挑战。</p>
+<p>知识技能在快速贬值。很多操作型技能被智能体承接，昨天还值钱的熟练度，今天可能只是系统的一个默认功能。行为特质的评价容易失真，因为面试中的行为表现可以准备，而真实工作行为在 collaborative 场景中变得更复杂。经验要求的信号价值也在下降，因为经验的载体变了：过去十年经验意味着处理过大量案例，现在大量案例可以由系统模拟，真正稀缺的是在模糊情境中做判断的经历。</p>
+<p>替代方案是"任务簇画像"。它不从"这个人应该是什么样"出发，而从"这个位置要做哪些判断"出发。画像的骨架是四组信息：这个位置承担的关键任务簇，每个任务簇需要的判断类型，判断失败时的后果，以及判断所需的信息与协作条件。四组信息确定之后，再推导能力要求。这样做的好处是画像与工作直接挂钩，不会退化成一份漂亮的素质清单。</p>
+<p>能力要求可以收敛为三类。第一类是领域判断，指在具体业务领域里分辨好坏、识别风险、做出取舍的能力。它是专业性的核心，AI可以辅助但难以替代，因为领域判断往往依赖隐性知识与责任意识。第二类是AI协作，指把任务拆给智能体、写好输入、审核输出、处理异常的能力。它不是会写提示词那么简单，而是一种工作设计能力。第三类是系统设计，指把重复出现的问题转化为规则、流程与资产的能力。三类能力的组合，决定了一个人在AI组织里的位置：领域判断强但协作弱的人，适合做专家；协作强但领域弱的人，适合做流程设计；三类都具备的人，才是复合型人才。</p>
+<p>能力模型可以分四层来描述，从下到上依次是价值观底线、通用素养、专业判断、场景编排。价值观底线是不可谈判的部分，例如诚信、保密、客户利益优先；通用素养包括学习能力、沟通能力、结构化思维；专业判断按领域细分，描述从新手到专家的进阶；场景编排是AI组织新增的一层，描述一个人能否把领域判断、智能体能力与业务流程组合起来解决问题。四层之中，前两层用于筛选，第三层用于定级，第四层用于识别高潜。</p>
+<p>每一层都需要可观察的行为锚定，而不是形容词。举例来说，"专业判断"的进阶可以写成四档：L1能在标准场景下按规则作出正确判断；L2能在标准场景出现偏差时识别并上报；L3能在模糊场景中给出可辩护的判断并说明依据；L4能定义新的判断标准，并让其他人可复用。四档描述都指向具体行为，评价时才有共识。很多能力模型失败，不是因为框架不对，而是因为每一档都写成"较强""优秀""卓越"，最后只能靠印象打分。</p>
+<p>画像还要写清楚"不要求什么"。这一条常被忽略，却极其重要。AI组织里，很多能力可以由系统补齐，例如信息检索、数据处理、文档排版、基础分析。如果画像把这些都写成硬性要求，会筛掉很多判断力强但不擅长执行细节的人。明确"不要求"，等于告诉招聘官：这些能力可以外挂，不要用它来淘汰人。反过来，对"必须具备"的部分要写得极窄而极硬，例如"能独立承担某类客户的最终方案签字"，这种要求不能模糊。</p>
+<p>画像要真正被使用，还需要三个配套机制。第一个是版本管理：画像不是写完就锁定的文件，应随业务变化更新，每次更新记录原因与影响范围，避免招聘标准悄悄漂移。第二个是数据来源：画像中的判断场景应来自真实工作样本，例如近半年的异常事件、客户投诉、项目复盘，而不是HR闭门讨论出来的假设。第三个是评审机制：画像由业务负责人、资深从业者与HR共同评审，业务负责人对"判断场景是否真实"负责，资深从业者对其"难度是否合适"负责，HR对"表述是否可评估"负责。三方各管一段，画像才不会变成某一方的自说自话。</p>
+<p>能力认证是把画像落到人的关键一步。认证不是考试，而是证据评审：候选人或有经验员工提交若干真实工作样本，例如一份判断方案、一次异常处置记录、一段协作过程，由评审人按能力档位标准判断是否达标。认证的好处是绕开"说了什么"，直接看"做过什么"。认证的难点是评审成本高，因此只对关键能力与关键岗位做，不必全覆盖。认证结果可以用于招聘定级、内部转岗、薪酬溢价与培养计划，让能力标准真正影响资源分配。</p>
+<p>一个合成案例可以说明画像重写的价值。某物流企业过去招区域经理，要求"五年以上物流经验、熟悉仓储与运输、具备团队管理能力、抗压能力强"。按这个标准招来的人，履历漂亮，但上任后普遍卡在同一个地方：区域内的异常事件越来越多，他们习惯按经验处理，不会把异常转化为规则，也不会用系统工具做预警。企业后来重写画像，把关键任务簇定义为"区域履约异常的识别与处置"，判断类型包括"区分偶发异常与系统性风险""决定何时升级到总部""判断哪些经验值得固化为规则"。能力要求随之调整为：领域判断L3以上、AI协作L2以上、系统设计L2以上，并明确"不要求亲自处理每一个异常"。新画像启用后，招聘来源从同行挖人转向内部运营骨干与数据分析背景的复合人选，一年内区域异常复发率明显下降。画像没有变神奇，它只是把"要做的判断"说清楚了。</p>
+<h2 id="4-2-招聘漏斗重构-从海选到精准匹配">4.2 招聘漏斗重构：从海选到精准匹配</h2>
+<p>传统招聘漏斗的逻辑是"大进大出"：尽量多收简历，靠层层筛选留下少数。这个逻辑成立的前提是筛选成本低、信号可靠。AI把筛选成本降得很低，却也让"简历数量"变得更加没有意义，因为候选人和招聘方都可以用AI批量生产漂亮的材料。漏斗若不重构，结果只是把更多噪声更快地送进面试。</p>
+<p>重构的第一步是把内部人才市场放在外部招聘之前。多数组织并不缺人，缺的是让内部的人被看见的机制。AI可以把员工的技能、项目经历、绩效反馈、学习记录整合成能力档案，再按岗位画像做匹配。内部匹配的优势不只是省钱，更在于候选人的真实行为数据更完整，判断更可靠。推广内部人才市场会遇到两个阻力：管理者不愿放人，员工不敢申请。前者需要制度约束，例如内部流动不影响管理者考核；后者需要文化保障，例如申请失败不留记录。这两件事不做，内部市场就只是一个人力资源系统里的摆设。</p>
+<p>第二步是精准寻源。与其在公开渠道等简历，不如先定义"哪里的人最可能有这种判断力"，再定向触达。寻源的依据可以是项目经历、作品、社区贡献、同行推荐，而不只是职位名称。AI在这里的作用是扩大搜索半径与提高触达效率，例如从公开项目里识别具备某类经验的人，或根据岗位画像生成个性化的沟通内容。需要警惕的是"同质化寻源"：模型倾向于找到与历史成功者相似的人，结果是团队背景越来越像，创新能力下降。治理办法是刻意设置"异质配额"，例如每个岗位至少有一位来自非传统背景的候选人进入终面。</p>
+<p>第三步是结构化验证。简历与初筛只能验证"是否具备基本条件"，不能验证"是否能做出正确判断"。结构化验证的核心是把岗位画像中的关键判断场景变成可评估的任务：给一个真实但脱敏的案例，要求候选人在限定时间内给出判断与依据；或者安排一次模拟协作，让候选人使用智能体完成一项任务，观察其拆解、审核与修正的过程。这类评估的成本比传统面试高，但预测效度也高，尤其适合关键岗位。</p>
+<p>招聘团队使用AI也需要一份简明规范，否则工具会用得很随意。规范至少包括四条：候选人数据只能用于本次招聘目的，不得转入其他用途；模型输出只作为参考，不得作为淘汰的唯一依据；所有自动生成的沟通内容必须由招聘人员确认后发出；候选人提出异议时，必须能说明主要判断依据。四条规范看起来简单，执行起来需要系统支持，例如权限隔离、日志留存与模板管理。规范的价值在于把"技术能力"变成"可审计的流程"，这在招聘这种高敏感场景里尤其重要。</p>
+<p>第四步是试用期项目验证。无论评估多严谨，都不如真实工作可靠。可以把试用期的前六到八周设计成一个明确的验证项目，规定交付物、判断节点与验收人。项目验证的好处是把"看错人"的代价控制在早期，也给新人一个真实的成功机会。很多企业试用期只是"熟悉环境"，没有验证设计，等于把风险推到了转正之后。</p>
+<p>AI在漏斗各环节的作用需要划清边界。职位描述生成、候选人寻源、初步沟通、面试排期、材料整理，这些环节可以高度自动化，收益明确。简历初筛可以自动化，但要设置人工复核与申诉通道，尤其当筛选结果涉及淘汰时。面试判断不宜交给AI单独完成，AI适合做记录、追问建议、评分校准，最终判断仍由人作出。录用决定必须由人签字，这不是技术限制，而是责任要求。</p>
+<p>漏斗的指标也要改。传统指标是招聘周期、单次招聘成本、简历转化率，这些指标衡量的是效率。AI组织更需要质量指标：到岗胜任时间，即从入职到能独立承担责任的时间；试用期通过率与早期离职率；招聘来源的质量，即不同渠道进来的人在后两年的表现差异；用人经理满意度，尤其是对判断力的评价。效率指标仍然要看，但不能让它主导决策，否则组织会为了快而降低标准，最后用更高的替换成本买单。</p>
+<p>一个合成案例说明了漏斗重构的效果。某软件服务企业过去招聘实施顾问，靠渠道批量投递，面试两轮，主要看沟通与行业经验。业务反馈新人上手慢，客户投诉多。重构后，企业先开放内部转岗，把两名熟悉产品的技术支持转到实施岗；外部寻源改为定向触达有复杂项目交付经验的人；面试增加一个真实客户场景的判断任务，要求候选人在四十分钟内给出实施方案与风险清单；试用期设置一个"独立交付一个小客户"的验证项目。一年后，招聘人数下降，但实施团队的客户满意度上升，新人独立交付的时间缩短。变化的实质是把招聘从"选履历"变成"选判断"。</p>
+<p>漏斗重构之后，数据分析的方式也要跟着变。传统漏斗分析看各环节转化率，重点在"哪里漏得多"；重构后的漏斗更像一个质量追踪系统，重点在"哪一类人从哪里来、后来表现如何"。可以按来源、评估方式、面试官、岗位画像版本四个维度做交叉分析，找出真正有预测力的环节。一个常见发现是：某一轮面试的评分与后续绩效几乎无关，却消耗了大量时间，这种环节应该简化；另一种常见发现是：某个非传统来源的候选人群体绩效突出，却因为简历不够漂亮而在初筛被大量淘汰，这种偏差应该被纠正。</p>
+<p>候选人体验也是漏斗的一部分。AI可以提升沟通效率，但也容易让流程变得冷漠：自动回复、机械追问、长时间无反馈。体验差的候选人不会再来，还会在市场上传播负面评价。比较稳妥的做法是把自动化用在"信息同步"上，把人的温度留在"关键节点"上：面试后的个性化反馈、录用沟通、拒绝通知。尤其拒绝通知，值得由人认真写，因为它决定了候选人如何看待这家公司。</p>
+<h2 id="4-3-AI辅助面试-测评与偏见治理">4.3 AI辅助面试、测评与偏见治理</h2>
+<p>面试是人才决策中信息密度最高的环节，也是最容易失真的环节。传统面试的问题有三：问题不结构化，不同候选人被问不同的问题；评价不锚定，面试官凭印象打分；信息不留痕，事后无法复盘为什么看走眼。AI可以在三个地方提供帮助，但不能替代人的判断。</p>
+<p>第一个帮助是结构化。AI可以根据岗位画像生成统一的面试提纲，确保每位候选人被问到同一组关键判断场景，并提示面试官追问细节。结构化面试的预测效度在研究中长期高于非结构化面试，原因不是问题更聪明，而是可比性更强。AI还能实时记录回答要点，标出含糊之处，提示"这里缺少具体例子"。这类提示能显著改善面试官的信息采集质量，尤其对经验不足的面试官。</p>
+<p>第二个帮助是评分校准。多名面试官评价同一候选人时，分歧往往来自标准不同。AI可以把评分锚定到行为描述上，例如"是否给出了判断依据""是否识别了关键风险""是否考虑了替代方案"，并在面试后汇总分歧点，供面试官讨论。校准的目的不是强行一致，而是让分歧可见。分歧本身是有价值的信息，说明候选人在某些维度上表现不稳定。</p>
+<p>第三个帮助是流程效率。安排面试、发送提醒、整理材料、生成反馈摘要，这些事务性工作可以交给智能体，让面试官把时间用在判断上。需要注意的是，AI生成的反馈摘要必须标注"待面试官确认"，不能直接进入录用档案，否则会把AI的措辞当成事实。</p>
+<p>测评工具的使用要更谨慎。能力测评、情境判断测验、性格测评各有用途，也各有边界。能力测评适合验证硬技能与认知能力，情境判断适合观察处理具体问题的方式，性格测评适合团队配置参考，不适合作为淘汰依据。一个常见错误是把性格测评当成"文化匹配"的筛子，结果招来一群相似的人，团队多样性下降。另一个错误是用测评替代面试，测评给出的是倾向，不是证据。</p>
+<p>可以把常用测评的用途与边界整理成一张对照表，避免用错工具。</p>
+<div class="table-wrap"><table>
+<tr><th>工具类型</th><th>擅长回答的问题</th><th>不应承担的功能</th><th>使用建议</th></tr>
+<tr><td>能力与认知测评</td><td>是否具备基本的分析与学习能力</td><td>判断真实工作绩效</td><td>作为初筛参考，配合任务评估</td></tr>
+<tr><td>情境判断测验</td><td>面对典型场景会如何取舍</td><td>预测长期价值观</td><td>用于关键岗位，题目来自真实案例</td></tr>
+<tr><td>性格与动机测评</td><td>工作偏好与团队互补性</td><td>淘汰候选人、判定文化匹配</td><td>仅用于团队配置与发展反馈</td></tr>
+<tr><td>结构化面试</td><td>过去的判断与行为证据</td><td>单独决定录用</td><td>多面试官、统一题库、评分锚定</td></tr>
+</table></div>
+<p>表格背后的原则是"多源验证"：任何单一工具都只能提供部分信号，关键岗位至少需要三种不同来源的证据，且证据之间能相互印证。用一张表管住工具使用，比反复强调"要科学"更有效。</p>
+<p>偏见治理是AI招聘中最容易被忽视、也最容易出事的部分。偏见有四个来源。数据偏见来自历史招聘结果，如果过去某类人被系统性低估，模型会学到这种偏好。标注偏见来自人工标签，标注者的主观判断会被固化。提示词偏见来自指令设计，例如要求模型"寻找有领导气质的人"，可能隐含性别或性格偏好。算法偏见来自优化目标，如果模型只优化"通过率"或"稳定性"，会牺牲其他维度。</p>
+<p>治理偏见需要一套组合动作。技术上，可以做差异影响分析，比较不同群体在筛选各环节的通过率，发现显著差异就回溯原因。流程上，关键决策保留人工终审，尤其是淘汰决定。制度上，建立候选人申诉通道，允许候选人了解被拒的主要原因（在不泄露他人信息的前提下）。管理上，定期审计模型与供应商，要求其说明训练数据来源、评估方法与已知局限。四件事都做，才能把偏见控制在可接受范围。</p>
+<p>法律边界也需要提前划清。我国个人信息保护法对自动化决策提出了明确要求：利用个人信息进行自动化决策，应保证决策透明度和结果公平公正；通过自动化决策方式作出对个人权益有重大影响的决定，个人有权要求说明，并有权拒绝仅通过自动化决策的方式作出决定。招聘录用直接影响个人就业权益，属于典型的高影响场景。企业若用模型做筛选，至少要做到可解释、可复核、可申诉，并在处理个人信息前履行告知义务。把合规当作事后补丁，代价往往高于收益。</p>
+<p>人才供应的节奏也需要设计。多数企业的招聘是"缺了才招"，结果是永远在救火。比较稳妥的做法是建立"供应节奏表"：按业务规划推导未来四个季度的岗位需求，区分可以内部培养、可以提前储备、必须即时招聘三类，分别设定提前量与触发条件。例如关键岗位提前六个月启动内部培养，稀缺岗位提前九个月启动外部寻访，通用岗位按季度批量招聘。提前量不是越早越好，太早会导致人才闲置与流失，关键是匹配岗位的培养周期。</p>
+<p>供应节奏还要有"缓冲池"。完全按计划配置，一旦业务突变就会断档。缓冲可以是内部人才池、外部候选人库、可快速切换的合作伙伴。缓冲池要有人维护，定期更新候选人状态与意愿，否则名单会迅速过期。维护成本不高，但在关键时刻能显著缩短到岗时间。</p>
+<h2 id="4-4-关键-稀缺与复合型人才获取策略">4.4 关键、稀缺与复合型人才获取策略</h2>
+<p>人才获取的难点不在"招人"，而在"分清哪类人值得投入不同成本"。组织里有三类人才需要区别对待。</p>
+<p>第一类是关键人才，指处在关键位置上的人。关键位置的判断标准是"错误的代价"，而不是职级高低。一个负责核心客户续约的客户经理，一个掌握关键工艺参数的工程师，一个能决定产品方向的负责人，都可能比某些总监更关键。关键人才的获取策略是"长期主义"：提前识别、持续接触、必要时为其创造位置。关键位置很少能靠临时招聘解决，因为信任与上下文需要时间积累。</p>
+<p>第二类是稀缺人才，指市场上供给极少的技能持有者。稀缺技能的范围在AI时代变化很快，今天的稀缺可能是明天的标配。因此稀缺人才的策略要"快进快出"：用项目制、顾问制、兼职制快速获得能力，同时尽快把能力内部化，避免长期依赖。把稀缺人才全部转为全职，既不现实，也会推高成本；完全不内部化，则会在关键环节被卡脖子。比较稳妥的做法是"一个外部专家带两个内部骨干"，项目结束时内部人已能接手。</p>
+<p>第三类是复合型人才，指同时具备两种以上关键能力的人，例如"懂工艺又懂数据""懂客户又懂产品""懂财务又懂系统设计"。复合型人才的价值在于连接，他们能把不同语言翻译成共同方案，减少协作损耗。识别复合型人才不能只看简历上的技能列表，要看项目经历中是否真的做过跨界的判断。一个简单的验证方法是问："你做过的最难的一次跨界协调是什么，当时你如何让两边达成一致？"回答里有具体冲突与取舍的，才是真复合；只罗列概念的，多半是自我包装。</p>
+<p>获取手段可以按build、buy、borrow、bot四类组合。自建适合关键能力与长期壁垒，通过内部培养、轮岗、项目历练实现。外购适合成熟能力与紧急缺口，通过定向招聘或团队引进实现。借用适合阶段性稀缺能力，通过专家网络、顾问、外包实现。智能体适合高频、规则清晰的任务，通过建设与运营实现。四类手段要按能力逐项配置，而不是全公司一刀切。一个常见的浪费是：明明可以用智能体承接的常规任务，却在高价挖人；明明是核心能力，却长期依赖外包。</p>
+<p>复合型人才的定价需要特别说明。传统薪酬按岗位定级，复合型人才往往被塞进某一个序列，价值被低估。更合理的做法是设"能力溢价"：在岗位薪酬基础上，对稀缺的能力组合给出额外补贴，补贴与能力认证挂钩，认证失效则补贴取消。这样既不破坏薪酬结构，也能反映市场价值。溢价的比例不宜过高，否则会引发内部不公平感；关键是让溢价有依据、可解释、可退出。</p>
+<p>保留复合型人才，钱只是一部分。这类人通常在意三件事：能否接触更复杂的判断，能否获得跨界的资源，能否看到自己的影响力。组织可以为他们设计"双通道"：一条是专业深度，一条是跨界整合，两条通道的层级与待遇对等。还可以给他们"项目发起权"，允许其在授权范围内发起跨部门项目。这些安排的成本不高，但能显著提升粘性，因为它们回应的是职业成就感，而不是单纯的经济诉求。</p>
+<p>一个合成案例可以说明组合策略。某新能源企业需要既懂电控又懂算法的人才，市场上极少。企业没有一味高价挖人，而是分三步走：先从内部选出五名电控工程师，脱产学习数据与算法基础；再从外部请两位专家做项目顾问，带着这五个人做真实的控制策略优化；同时建设一个算法平台，把常规的参数调优交给智能体。两年后，五名工程师中有三人成为复合骨干，两人转到产品岗位；外部专家退出，能力留在内部；平台承接了大量重复调参工作。这个案例的关键不是某一招，而是把build、borrow、bot组合起来，形成一个能力内化的路径。</p>
+<p>人才池的运营也值得重视。关键与稀缺人才往往不是"有需求才去找"，而是长期维护的关系网络。人才池不是简历库，它至少包含三类信息：这个人的核心能力与代表作品，他的职业偏好与流动意向，以及最近一次真实接触的记录。维护人才池的成本不低，因此要设优先级，只维护关键岗位与稀缺技能相关的人。接触方式也要克制，避免变成骚扰。有效的做法是提供有价值的信息与机会，例如邀请参加小范围交流、分享行业洞察、邀请参与一个短期项目，让关系在合作中自然加深。</p>
+<p>外部专家网络则要解决"用得住"的问题。很多企业请专家做一次分享就结束，知识没有留下。更有效的做法是把专家嵌入具体项目，明确交付物与内部对接人，要求专家在项目结束前完成一次内部转训。转训不是礼貌性汇报，而是把专家的判断逻辑拆成内部可用的规则与案例。能做到这一点，外部智力才真正转化为组织能力。</p>
+<p>人才供应链还有一个末端环节常被忽略：入职后的前九十天。无论招聘多精准，新人都需要一段时间把能力转化为产出。这九十天的设计，决定了招聘投入能否兑现。有效的做法包括：明确三十天、六十天、九十天的交付物；安排一位能给出具体反馈的带教人；在第三十天做一次判断力校准，看看新人对关键场景的理解是否到位；在第九十天做一次正式复盘，决定是加速、调整还是止损。把这段设计好，招聘才是一个闭环，而不是把风险推给试用期。</p>
+<p>供应链的最终目标不是"招到最好的人"，而是"让合适的人在合适的位置上尽快产生判断价值"。这句话听起来平淡，执行起来却要求组织在画像、漏斗、评估、获取四个环节都做减法：少一些花哨的标准，多一些真实的判断场景；少一些批量筛选，多一些定向验证；少一些对工具的迷信，多一些对责任的坚持。</p>
+        </div>
+        <div class="ha-footer-nav">
+          <a href="ch03.html">← 上一页</a>
+          <a href="ch05.html">下一页 →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+  
+<script>
+(function () {
+  var list = document.querySelector(".ha-chapters");
+  if (!list) return;
+  list.addEventListener("click", function (e) {
+    var btn = e.target.closest(".chap-toggle");
+    if (!btn || !list.contains(btn)) return;
+    var li = btn.closest("li[data-chap]");
+    if (!li) return;
+    var willOpen = !li.classList.contains("open");
+    list.querySelectorAll("li[data-chap]").forEach(function (item) {
+      item.classList.remove("open");
+      var b = item.querySelector(".chap-toggle");
+      if (b) b.setAttribute("aria-expanded", "false");
+    });
+    if (willOpen) {
+      li.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      // 第一次展开时进入该章正文；已在本章则只展开小节
+      var href = li.getAttribute("data-chap");
+      var file = (location.pathname.split("/").pop() || "");
+      if (href && file !== href && !file.endsWith("/" + href)) {
+        location.href = href;
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

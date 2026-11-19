@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>雇主品牌承接破局 · 思维导图</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --panel: #ffffff;
+      --ink: #15202b;
+      --muted: #5a6876;
+      --line: #dde3ea;
+      --teal: #1f8a7a;
+      --teal-soft: #e6f5f2;
+      --warn: #b45309;
+      --warn-soft: #fff7ed;
+      --danger: #b42318;
+      --danger-soft: #fef3f2;
+      --ok: #027a48;
+      --ok-soft: #ecfdf3;
+      --blue: #175cd3;
+      --blue-soft: #eff8ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans SC", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% 0%, #dff3ef 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 10%, #e8eef5 0%, transparent 50%),
+        var(--bg);
+      line-height: 1.7;
+    }
+    .wrap {
+      width: min(1080px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 1.75rem 0 4rem;
+    }
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.4rem 1.5rem 1.3rem;
+      box-shadow: 0 10px 30px rgba(21, 32, 43, 0.05);
+      margin-bottom: 1.25rem;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.55rem;
+    }
+    h1 {
+      margin: 0 0 0.55rem;
+      font-size: clamp(1.45rem, 3vw, 1.95rem);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .lead { margin: 0; color: var(--muted); font-size: 0.98rem; }
+    .goal {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .chip.me { background: var(--teal-soft); color: #0f5c54; }
+    .chip.opp { background: var(--warn-soft); color: var(--warn); }
+    .chip.goal { background: var(--ok-soft); color: var(--ok); }
+    .chip.risk { background: var(--danger-soft); color: var(--danger); }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1.25rem;
+      position: sticky;
+      top: 0.6rem;
+      z-index: 5;
+      background: rgba(244, 246, 248, 0.88);
+      backdrop-filter: blur(8px);
+      padding: 0.55rem 0;
+    }
+    .nav a {
+      text-decoration: none;
+      color: var(--muted);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+    .nav a:hover { color: var(--ink); border-color: #c7d0da; }
+
+    section.block {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.25rem 1.35rem 1.4rem;
+      margin-bottom: 1.15rem;
+      box-shadow: 0 8px 24px rgba(21, 32, 43, 0.04);
+    }
+    section.block h2 {
+      margin: 0 0 0.85rem;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    section.block h2 .num {
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 7px;
+      background: var(--teal);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 0.82rem;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 700;
+    }
+    h3 {
+      margin: 1.15rem 0 0.55rem;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    p { margin: 0 0 0.75rem; }
+    ul, ol { margin: 0 0 0.75rem; padding-left: 1.2rem; }
+    li { margin: 0.25rem 0; }
+
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.7rem;
+    }
+    .org-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.85rem 0.9rem;
+      background: #fafbfc;
+    }
+    .org-card.me {
+      background: var(--teal-soft);
+      border-color: #b7e2da;
+    }
+    .org-card.opp {
+      background: var(--warn-soft);
+      border-color: #fcd9a8;
+    }
+    .org-card .name { font-weight: 700; font-size: 0.9rem; line-height: 1.35; }
+    .org-card .meta { margin-top: 0.35rem; font-size: 0.78rem; color: var(--muted); }
+    .org-card .tag {
+      display: inline-block;
+      margin-top: 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+    }
+    .org-card.me .tag { background: #fff; color: #0f5c54; }
+    .org-card.opp .tag { background: #fff; color: var(--warn); }
+
+    .mermaid-wrap {
+      overflow-x: auto;
+      background: #fbfcfd;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.75rem;
+    }
+    .mermaid { margin: 0 auto; }
+
+    .flow {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .flow-step {
+      display: grid;
+      grid-template-columns: 2.4rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fafbfc;
+    }
+    .flow-step .n {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-family: "IBM Plex Mono", monospace;
+      background: var(--teal);
+      color: #fff;
+    }
+    .flow-step h4 { margin: 0 0 0.25rem; font-size: 0.98rem; }
+    .flow-step p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+    .quote {
+      margin: 0.65rem 0 0;
+      padding: 0.85rem 1rem;
+      border-left: 3px solid var(--teal);
+      background: var(--teal-soft);
+      border-radius: 0 10px 10px 0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #1c3a36;
+    }
+    .quote.leader {
+      border-left-color: var(--blue);
+      background: var(--blue-soft);
+      color: #163b6b;
+    }
+    .quote.warn {
+      border-left-color: var(--warn);
+      background: var(--warn-soft);
+      color: #7a3e05;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    @media (max-width: 800px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      background: #fafbfc;
+    }
+    .card h4 { margin: 0 0 0.4rem; font-size: 0.95rem; }
+    .card p, .card li { font-size: 0.9rem; color: #334155; }
+
+    .principle {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.65rem;
+      margin-top: 0.75rem;
+    }
+    .principle .item {
+      padding: 0.8rem 0.9rem;
+      border-radius: 12px;
+      background: var(--ok-soft);
+      border: 1px solid #abefc6;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #05603a;
+    }
+    .dont {
+      background: var(--danger-soft);
+      border-color: #fecdca;
+      color: #912018;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 0.5rem;
+    }
+    .copy-btn {
+      margin-top: 0.55rem;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: inherit;
+    }
+    .copy-btn:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eyebrow">HR 组织分工 · 策略沙盘</div>
+      <h1>雇主品牌承接破局：思维导图与行动方案</h1>
+      <p class="lead">
+        你是<strong>中后台 BP&文化&党建部</strong>组长（3人）。小学 BP&招聘&培训组（10人）新增校园招聘后，想把雇主品牌甩给你。
+        目标：<strong>不接雇主品牌</strong>，同时不背「不协作」的锅。
+      </p>
+      <div class="goal">
+        <span class="chip me">我方：中后台 BP · 3人</span>
+        <span class="chip opp">对方：小学招聘组 · 10人</span>
+        <span class="chip goal">目标：不接雇主品牌</span>
+        <span class="chip risk">风险：被贴「推活」标签</span>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="页面导航">
+      <a href="#org">组织盘面</a>
+      <a href="#map">总思维导图</a>
+      <a href="#trick">对方套路</a>
+      <a href="#break">三层破局</a>
+      <a href="#rebut">反驳预案</a>
+      <a href="#pitfall">避坑清单</a>
+    </nav>
+
+    <section class="block" id="org">
+      <h2><span class="num">1</span>当前组织盘面</h2>
+      <div class="org-grid">
+        <div class="org-card me">
+          <div class="name">中后台BP&文化&党建部</div>
+          <div class="meta">约 3 人 · 你是组长</div>
+          <span class="tag">我方 · 已满负荷</span>
+        </div>
+        <div class="org-card">
+          <div class="name">CB&OD&SSC部</div>
+          <div class="meta">薪酬 / OD / SSC</div>
+        </div>
+        <div class="org-card">
+          <div class="name">基地HR部</div>
+          <div class="meta">属地人力支持</div>
+        </div>
+        <div class="org-card opp">
+          <div class="name">小学BP&招聘&培训部</div>
+          <div class="meta">约 10 人 · 新增校园招聘</div>
+          <span class="tag">对方 · 想甩雇主品牌</span>
+        </div>
+        <div class="org-card">
+          <div class="name">素养&初中&校园BP&激励部</div>
+          <div class="meta">校园相关能力在业务侧迁移中</div>
+        </div>
+      </div>
+      <p style="margin-top:1rem;color:var(--muted);font-size:0.92rem">
+        关键动作：校园团队招聘划给小学组 → 小学组工作量上升 → 组长想剥离雇主品牌 → 用「文化相近」理由推给你 → 且已先向上吹风。
+      </p>
+    </section>
+
+    <section class="block" id="map">
+      <h2><span class="num">2</span>总思维导图</h2>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+mindmap
+  root((不接雇主品牌<br/>破局总图))
+    局面判断
+      对方套路
+        偷换逻辑：对内文化≠对外雇主品牌
+        私下双线：先打点领导再找你
+        甩活本质：新增校招后减负
+        制造既成事实感
+      力量对比
+        对方约10人
+        我方仅3人
+        我方已有BP+文化+党建刚性活
+      被动点
+        领导已听单方面说法
+        硬拒易被贴不协作标签
+    核心原则
+      不硬杠不人身攻击
+      不私下承诺试试
+      只谈负荷边界链路收益
+      把决策权还给领导
+    三层动作
+      私下回她
+        认可听起来相关
+        摆3人满负荷
+        强调招聘强绑定
+        拒绝私下定案
+      正式同步领导
+        共情对方增量
+        拆差异+摆风险
+        方案A留原组
+        方案B要编制才可议
+      给台阶
+        组内调配优先
+        统一归口需配套资源
+    预期结果
+      领导倾向方案A
+      你显得专业可协作
+      雇主品牌不落到3人组
+        </pre>
+      </div>
+    </section>
+
+    <section class="block" id="trick">
+      <h2><span class="num">3</span>先看清对方套路</h2>
+      <div class="two-col">
+        <div class="card">
+          <h4>1）偷换逻辑</h4>
+          <p>拿「雇主品牌和文化相关」当理由。实际：</p>
+          <ul>
+            <li><strong>内部文化</strong>：对内、员工、留存与氛围</li>
+            <li><strong>雇主品牌</strong>：对外、候选人、校招转化与吸引力</li>
+          </ul>
+          <p>只是名字沾边，对象、目标、交付链路完全不同。</p>
+        </div>
+        <div class="card">
+          <h4>2）私下双线操作</h4>
+          <p>先向上吹风，再私下找你「商量」，制造「已经谈得差不多了」的既定事实感，把你逼到被动表态。</p>
+        </div>
+        <div class="card">
+          <h4>3）甩活本质</h4>
+          <p>组内新增校园招聘，想剥离原雇主品牌保负荷。对方约 10 人，你方 3 人，资源对比悬殊。</p>
+        </div>
+        <div class="card">
+          <h4>4）你的风险点</h4>
+          <p>单纯口头拒绝，容易被贴「不协作、推活」。领导已先听到她单方面说法，你需要用<strong>业务逻辑 + 人力事实 + 备选方案</strong>翻盘。</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="item">不硬杠，不说「我就是不接」</div>
+        <div class="item">不否定「文化与品牌有关联」</div>
+        <div class="item">从负荷 / 权责 / 链路 / 收益摆事实</div>
+        <div class="item">把决策权还给领导，证明这不是最优方案</div>
+      </div>
+    </section>
+
+    <section class="block" id="break">
+      <h2><span class="num">4</span>三层破局方法</h2>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="n">1</div>
+          <div>
+            <h4>私下回她：温和守界，拒绝私下定案</h4>
+            <p>不对人、不指责甩活；只讲客观约束；把议题抬到上级统一决策。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="n">2</div>
+          <div>
+            <h4>向上同步领导：胜负手（建议留痕）</h4>
+            <p>共情 → 拆差异 → 摆人力 → 论证链路 → 给 A/B 方案。把「接」的条件抬高到加人/减量。</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="n">3</div>
+          <div>
+            <h4>给台阶：避免对立</h4>
+            <p>肯定她「想优化分工」的动机，推荐组内调配；若组织要统一归口，必须配套编制与优先级评估。</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>话术 A · 回复小学组组长（稳妥版）</h3>
+      <div class="quote" id="talk-peer">这块我理解你的想法，雇主品牌和文化听起来确实挨着。但我们组现在一共就 3 个人，要扛中后台 BP、文化、党建三块常态化刚性工作，日常饱和度已经拉满，没有富余人力承接雇主品牌这块。
+
+而且雇主品牌是跟着招聘、校招、候选人链路走的，和你们招聘、校园业务是强绑定的，产出也直接服务招聘转化，放在招聘组本身链路是顺的。
+
+这个事我这边确实承接不了，建议咱们一起同步给上级，由领导统一评估人力分配和分工。</div>
+      <button class="copy-btn" type="button" data-copy="talk-peer">复制这段话术</button>
+
+      <h3>话术 B · 同步大 Leader（正式沟通稿）</h3>
+      <div class="quote leader" id="talk-leader">领导，跟您同步下关于雇主品牌分工这个事。我理解 XX（小学 BP 组长）现在新增校园招聘业务，组内工作量增加，想做分工优化的想法。
+
+先说明下我们组现状：一共 3 人，固定承载中后台全员 BP、内部文化活动落地、党建全流程工作，都是持续性刚性任务，目前已经满负荷，没有额外人力可以承接雇主品牌。
+
+另外从业务逻辑上，雇主品牌是面向外部候选人、服务校招和招聘转化的，和招聘、校园招聘业务链路高度绑定；而我们负责的内部文化，是面向在职员工，目标是员工留存、氛围建设，两者的目标人群、指标、项目周期、资源口径完全不同，放在一起并不天然适配。
+
+如果强行把雇主品牌切到我们这边，会出现两个问题：一是我们现有工作质量被稀释，文化、BP、党建这些刚性工作容易掉链子；二是雇主品牌脱离招聘一线，不了解候选人、校园业务的真实需求，做出来的内容没法支撑招聘效果，反而两头做不好。
+
+我的建议方案：
+方案 A（优先推荐）：雇主品牌继续留在小学 BP&招聘&培训组。他们一共 10 人，本身承载招聘培训业务，离业务最近，最合适；新增校园招聘进来之后，可以在组内重新做内部人力调配，把雇主品牌和校园招聘协同起来，反而能放大价值。
+方案 B（兜底，展现协作姿态）：如果后续组织层面确实希望雇主品牌和文化统一归口，那需要配套补充编制/专项人力给到我们组，同时明确优先级，评估现有工作哪些可以减量、后置，否则承接风险很高。</div>
+      <button class="copy-btn" type="button" data-copy="talk-leader">复制给领导的沟通稿</button>
+
+      <div class="mermaid-wrap" style="margin-top:1rem">
+        <pre class="mermaid">
+flowchart TD
+  A[对方私下找你接雇主品牌] --> B{你的回应}
+  B -->|私下松口试试| Z[后续很难推掉 ❌]
+  B -->|温和拒绝+建议上报| C[与领导正式同步]
+  C --> D[摆事实：3人满负荷]
+  C --> E[拆逻辑：对内文化 ≠ 对外雇主品牌]
+  C --> F[给方案]
+  F --> G[方案A：留原组内调配 ✅]
+  F --> H[方案B：要接必须加人/减量]
+  G --> I[领导大概率选A]
+  H --> I
+  I --> J[你不接活，且显得专业可协作]
+        </pre>
+      </div>
+    </section>
+
+    <section class="block" id="rebut">
+      <h2><span class="num">5</span>对方反驳预案</h2>
+      <div class="card" style="margin-bottom:0.75rem">
+        <h4>反驳 1：「雇主品牌属于大文化，归你们顺理成章」</h4>
+        <div class="quote warn">大类上都属于品牌文化，但业务属性差异很大。内部文化是员工关系，雇主品牌是招聘营销。行业常规做法是雇主品牌跟着招聘/校招团队走，指标看简历量、邀约、候选人吸引力，和招聘结果挂钩，放在招聘组权责更闭环。</div>
+      </div>
+      <div class="card" style="margin-bottom:0.75rem">
+        <h4>反驳 2：「你们做文化，顺手就能一起做」</h4>
+        <div class="quote warn">「顺手」看着简单，但雇主品牌是持续专项：校园宣讲物料、候选人内容、宣讲会、高校对接、答疑、雇主奖项申报等，持续消耗人力，不是零碎顺带工作。我们 3 人存量工作没有余量。</div>
+      </div>
+      <div class="card">
+        <h4>反驳 3：「只分一部分过来，不是全部」</h4>
+        <div class="quote warn">雇主品牌很难切半。品牌口径、对外形象、高校资源需要统一；切一部分会出现两套标准、反复对齐，内耗更大、效率更低。</div>
+      </div>
+    </section>
+
+    <section class="block" id="pitfall">
+      <h2><span class="num">6</span>避坑清单</h2>
+      <div class="principle">
+        <div class="item dont">不要私下拉扯、不要说「我试试」</div>
+        <div class="item dont">不要打小报告、评价对方人品心机</div>
+        <div class="item">守住：无资源不接增量</div>
+        <div class="item">重要沟通文字留痕，防传话变形</div>
+      </div>
+      <h3>一句话总策略</h3>
+      <p>
+        <strong>把「接不接」从人情题，改写成「哪边链路更闭环、哪边有人力、怎样对组织更优」的决策题。</strong>
+        你给台阶（方案 A/B），不给人设对立；领导通常不会为了一项甩活额外给你加编，最终大概率回到方案 A。
+      </p>
+    </section>
+
+    <p class="footer-note">仅供内部策略推演 · 可直接复制话术使用</p>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      themeVariables: {
+        primaryColor: "#e6f5f2",
+        primaryTextColor: "#15202b",
+        primaryBorderColor: "#1f8a7a",
+        lineColor: "#5a6876",
+        secondaryColor: "#fff7ed",
+        tertiaryColor: "#eff8ff",
+        fontFamily: "Noto Sans SC, sans-serif"
+      },
+      mindmap: { padding: 12 }
+    });
+
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const id = btn.getAttribute("data-copy");
+        const text = document.getElementById(id)?.innerText || "";
+        try {
+          await navigator.clipboard.writeText(text);
+          const old = btn.textContent;
+          btn.textContent = "已复制";
+          setTimeout(() => (btn.textContent = old), 1200);
+        } catch (e) {
+          btn.textContent = "复制失败，请手动选中";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
